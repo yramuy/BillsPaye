@@ -1,3 +1,21 @@
+<?php
+// Check if the request is HTTP or HTTPS
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
+
+// Get the server name
+$server_name = $_SERVER['SERVER_NAME'];
+
+// Get the request URI
+$request_uri = $_SERVER['REQUEST_URI'];
+
+// Construct the full URL
+$current_url = $protocol . $server_name . $request_uri;
+
+// Output the current URL
+// echo "Current URL: " . $current_url;
+$url = explode("/", $current_url);
+
+?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -39,8 +57,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                <li class="nav-item  <?php echo $url[4] == "index.php" ? "menu-open" : ""; ?>">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -49,36 +67,21 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="index.php" class="nav-link active">
+                            <a href="index.php" class="nav-link <?php echo $url[4] == "index.php" ? "active" : ""; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dashboard v1</p>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="index2.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li> -->
+
                     </ul>
                 </li>
+
+
                 <li class="nav-item">
-                    <a href="modules/mostExcitingOffers.php" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Most Exciting Offers
-                        </p>
-                    </a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="modules/category.php" class="nav-link">
+                    <a href="modules/category.php"
+                        class="nav-link <?php if ($url[5]) {
+                            echo $url[5] == "category.php" ? "active" : "";
+                        } ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Categories
@@ -86,28 +89,48 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="modules/topPicks.php" class="nav-link">
+                    <a href="modules/topPicks.php"
+                        class="nav-link <?php if ($url[5]) {
+                            echo $url[5] == "topPicks.php" ? "active" : "";
+                        } ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Top Picks
                         </p>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
-                    <a href="modules/offers.php" class="nav-link">
+                    <a href="modules/offers.php"
+                        class="nav-link <?php if ($url[5]) {
+                            echo $url[5] == "offers.php" ? "active" : "";
+                        } ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Offers
                         </p>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
-                    <a href="modules/wishlist.php" class="nav-link">
+                    <a href="modules/wishlist.php"
+                        class="nav-link <?php if ($url[5]) {
+                            echo $url[5] == "wishlist.php" ? "active" : "";
+                        } ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Wishlist
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="modules/mostExcitingOffers.php"
+                        class="nav-link<?php if ($url[5]) {
+                            echo $url[5] == "mostExcitingOffers.php" ? "active" : "";
+                        } ?>">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Most Exciting Offers
                         </p>
                     </a>
                 </li>
