@@ -85,9 +85,9 @@ if (isset($_POST['btn_login'])) {
     <div class="container">
         <div class="login-container">
             <div class="avatar">
-                <img src="dist/img/avatar5.png" alt="User Image">
+                <img src="dist/img/Billspaye_logo.png" alt="User Image" style="height: 100px; width: 100px;">
             </div>
-            <h2>Admin Login</h2>
+            <!-- <h2>Admin Login</h2> -->
             <form method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
