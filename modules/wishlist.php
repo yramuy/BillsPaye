@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <h2>Category Page</h2>
+            <h2>Wishlist Page</h2>
         </div>
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->

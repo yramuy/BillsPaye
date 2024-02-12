@@ -54,7 +54,7 @@
                                 <p>Dashboard v1</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="index2.php" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dashboard v2</p>
@@ -65,20 +65,11 @@
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dashboard v3</p>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="widgets.php" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Widgets
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="widgets.php" class="nav-link">
+                    <a href="modules/mostExcitingOffers.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Most Exciting Offers
@@ -87,7 +78,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://billspayeadmin.in/BillsPaye/modules/category.php" class="nav-link">
+                    <a href="modules/category.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Categories
@@ -95,7 +86,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="widgets.php" class="nav-link">
+                    <a href="modules/topPicks.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Top Picks
@@ -104,7 +95,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="widgets.php" class="nav-link">
+                    <a href="modules/offers.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Offers
@@ -113,7 +104,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="widgets.php" class="nav-link">
+                    <a href="modules/wishlist.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Wishlist
