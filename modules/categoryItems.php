@@ -32,16 +32,6 @@ $result = mysqli_query($conn, $sql);
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <!-- /.card -->
-            <!-- Horizontal Form -->
-            <!-- <div class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title">Category List</h3>
-                </div>               
-                
-            </div> -->
-            <!-- /.card -->
 
             <div class="card card-info">
                 <div class="card-header">
