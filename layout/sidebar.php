@@ -57,10 +57,21 @@ $url = explode("/", $current_url);
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="index.php" class="nav-link <?php echo $url[4] == "index.php" ? "active" : ""; ?>">
-                        <i class="far fa-circle nav-icon"></i>
+                    <i class="nav-icon fas fa-th"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li> -->
+
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link <?php if ($url[4]) {
+                        echo $url[4] == "index.php" ? "active" : "";
+                    } ?>">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                        Dashboard
+                        </p>
                     </a>
                 </li>
 
@@ -71,6 +82,16 @@ $url = explode("/", $current_url);
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Categories
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="modules/categoryItems.php" class="nav-link <?php if ($url[5]) {
+                        echo $url[5] == "categoryItems.php" ? "active" : "";
+                    } ?>">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Category Items
                         </p>
                     </a>
                 </li>

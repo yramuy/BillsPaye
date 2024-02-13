@@ -41,7 +41,7 @@ if ($username == '') {
 ?>
 
 <style>
-    #category-error {
+    #category-error, #item_name-error, #item_image-error {
         display: inline;
         margin-left: 13.4em !important;
     }

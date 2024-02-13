@@ -113,6 +113,49 @@
             }
         });
     });
+
+    $(function () {
+        // $.validator.setDefaults({
+        //     submitHandler: function () {
+        //         alert("Category successful saved!");
+        //     }
+        // });
+        $('#category_item').validate({
+            rules: {
+                category: {
+                    required: true
+                },
+                item_name: {
+                    required: true
+                },
+                file: {
+                    required: true
+                },
+            },
+            messages: {
+                category: {
+                    required: "Please select a category"
+                },
+                item_name: {
+                    required: "Please enter a item name"
+                },
+                file: {
+                    required: "Please choose file"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
 </script>
 
 <script>
