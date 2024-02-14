@@ -41,7 +41,7 @@ if ($username == '') {
 ?>
 
 <style>
-    #category-error, #item_name-error, #item_image-error {
+    #category-error, #item_name-error, #item_image-error, #offer_title-error, #image-error {
         display: inline;
         margin-left: 13.4em !important;
     }
@@ -56,7 +56,7 @@ if ($username == '') {
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="../dist/img/Billspaye_logo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->

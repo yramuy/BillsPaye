@@ -10,7 +10,7 @@ $dbuser = "root";
 $dbpassword = "";
 $database = "billspaye";
 
-$conn = mysqli_connect($host,$dbuser, $dbpassword, $database);
+$conn = mysqli_connect($host,$dbuser,$dbpassword,$database);
 
 // if($con){
 //     echo "success";

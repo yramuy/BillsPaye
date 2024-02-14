@@ -97,7 +97,7 @@ $url = explode("/", $current_url);
                     <a href="../index.php" class="nav-link <?php if ($url[4]) {
                         echo $url[4] == "index.php" ? "active" : "";
                     } ?>">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fas fa-tachometer-alt nav-icon"></i>
                         <p>
                         Dashboard
                         </p>
@@ -105,9 +105,9 @@ $url = explode("/", $current_url);
                 </li>
                 <li class="nav-item">
                     <a href="categoryList.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "categoryList.php" ? "active" : "";
+                        echo $url[5] == "categoryList.php" || $url[5] == "category.php" ? "active" : "";
                     } ?>">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-folder"></i>
                         <p>
                             Categories
                         </p>
@@ -115,30 +115,41 @@ $url = explode("/", $current_url);
                 </li>
                 <li class="nav-item">
                     <a href="categoryItems.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "categoryItems.php" ? "active" : "";
+                        echo $url[5] == "categoryItems.php" || $url[5] == "addCategoryItem.php" ? "active" : "";
                     } ?>">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-chart-bar"></i>
                         <p>
                             Category Items
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="topPicks.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "topPicks.php" ? "active" : "";
+                    <a href="mostExcitingOffers.php" class="nav-link <?php if ($url[5]) {
+                        echo $url[5] == "mostExcitingOffers.php" || $url[5] == "addExcitingOffers.php" ? "active" : "";
                     } ?>">
+                        <i class="nav-icon fas fa-gift"></i>
+                        <p>
+                            Most Exciting Offers
+                        </p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="topPicks.php" class="nav-link <?php //if ($url[5]) {
+                        //echo $url[5] == "topPicks.php" ? "active" : "";
+                    //} ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Top Picks
                         </p>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a href="offers.php" class="nav-link <?php if ($url[5]) {
                         echo $url[5] == "offers.php" ? "active" : "";
                     } ?>">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-tags"></i>
                         <p>
                             Offers
                         </p>
@@ -149,22 +160,13 @@ $url = explode("/", $current_url);
                     <a href="wishlist.php" class="nav-link <?php if ($url[5]) {
                         echo $url[5] == "wishlist.php" ? "active" : "";
                     } ?>">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-heart"></i>
                         <p>
                             Wishlist
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="mostExcitingOffers.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "mostExcitingOffers.php" ? "active" : "";
-                    } ?>">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Exciting Offers
-                        </p>
-                    </a>
-                </li>
+                
 
             </ul>
         </nav>

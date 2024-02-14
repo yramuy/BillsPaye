@@ -1,15 +1,95 @@
 <?php require_once('../modules/header.php'); ?>
 
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <h2>Most Exciting Offer Page</h2>
-        </div>
-        <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+<?php
+
+require_once('../modules/database.php');
+
+$sql = "SELECT * FROM tbl_most_exciting_offers";
+$result = mysqli_query($conn, $sql);
+
+?>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Most Exciting Offers</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Most Exciting Offers</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <!-- /.card -->
+            <!-- Horizontal Form -->
+            <!-- <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Category List</h3>
+                </div>               
+                
+            </div> -->
+            <!-- /.card -->
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Most Exciting Offers</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <a class="btn btn-primary float-right" href="addExcitingOffers.php">Add Exciting Offers</a>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>SNo</th>
+                                <th>Offer Title</th>
+                                <th>Offer(%)</th>
+                                <th>Offer Date</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (mysqli_num_rows($result) > 0) {
+                                $sno = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Path to the image file
+                                    $imagePath = "../uploads/".$row['image_name']; // Update this with the actual path to your image file
+                                     ?>
+                                    <tr>
+                                        <td><?php echo $sno; ?></td>
+                                        <td><?php echo $row['offer_title']; ?></td>
+                                        <td><?php echo $row['offer']; ?></td>
+                                        <td><?php echo $row['offer_date']; ?></td>
+                                        <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
+                                        
+                                    </tr>
+                                    <?php $sno++;
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
 
 <?php require_once('../modules/footer.php'); ?>

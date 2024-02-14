@@ -156,7 +156,46 @@
             }
         });
     });
+    $(function () {
+        // $.validator.setDefaults({
+        //     submitHandler: function () {
+        //         alert("Category successful saved!");
+        //     }
+        // });
+        $('#exciting_offer').validate({
+            rules: {
+                offer_title: {
+                    required: true
+                },
+                
+                image: {
+                    required: true
+                },
+            },
+            messages: {
+                offer_title: {
+                    required: "Please enter a offer title"
+                },
+                
+                image: {
+                    required: "Please choose file"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
 </script>
+
 
 <script>
   $(function () {
