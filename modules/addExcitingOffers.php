@@ -111,7 +111,7 @@ if (isset($_POST['btnExcitingOffer'])) {
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-info" name="btnExcitingOffer">Save</button>
-                        <a type="submit" class="btn btn-default" href="categoryItems.php">Cancel</a>
+                        <a type="submit" class="btn btn-default" href="mostExcitingOffers.php">Cancel</a>
                     </div>
                     <!-- /.card-footer -->
                 </form>
