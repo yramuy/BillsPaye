@@ -16,12 +16,12 @@ $result = mysqli_query($conn, $sql);
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Category Items</h1>
+                    <h1 class="m-0">Subcategories</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Category Items</li>
+                        <li class="breadcrumb-item active">Subcategories</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -35,11 +35,11 @@ $result = mysqli_query($conn, $sql);
 
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Category Items</h3>
+                    <h3 class="card-title">Subcategories</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <a class="btn btn-primary float-right" href="addCategoryItem.php">Add Category Item</a>
+                    <a class="btn btn-primary float-right" href="addCategoryItem.php">Add Subcategory</a>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>

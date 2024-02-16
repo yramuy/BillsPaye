@@ -1,5 +1,5 @@
 <footer class="main-footer">
-<strong>Copyright &copy; 2014-2021 <a href="https://billspayeadmin.in/">BillsPayeAdmin.in</a>.</strong>
+    <strong>Copyright &copy; 2014-2021 <a href="https://billspayeadmin.in/">BillsPayeAdmin.in</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
         <!-- <b>Version</b> 3.2.0 -->
@@ -82,8 +82,10 @@
 
 </html>
 
+
+
 <script>
-    $(function () {
+    $(function() {
         // $.validator.setDefaults({
         //     submitHandler: function () {
         //         alert("Category successful saved!");
@@ -101,20 +103,20 @@
                 },
             },
             errorElement: 'span',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });
     });
 
-    $(function () {
+    $(function() {
         // $.validator.setDefaults({
         //     submitHandler: function () {
         //         alert("Category successful saved!");
@@ -144,19 +146,19 @@
                 },
             },
             errorElement: 'span',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });
     });
-    $(function () {
+    $(function() {
         // $.validator.setDefaults({
         //     submitHandler: function () {
         //         alert("Category successful saved!");
@@ -167,7 +169,7 @@
                 offer_title: {
                     required: true
                 },
-                
+
                 image: {
                     required: true
                 },
@@ -176,20 +178,20 @@
                 offer_title: {
                     required: "Please enter a offer title"
                 },
-                
+
                 image: {
                     required: "Please choose file"
                 },
             },
             errorElement: 'span',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });
@@ -198,19 +200,21 @@
 
 
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["excel", "pdf"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["excel", "pdf"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
-  });
 </script>

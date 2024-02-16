@@ -12,10 +12,10 @@ if (isset($_POST['btnExcitingOffer'])) {
     // Remove spaces
     $fileName1 = str_replace(' ', '', $fileName);
 
-    
     $timeString = date("Y-m-d H:i:s");
     $timestamp = strtotime($timeString);
-    $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+
+    $newFilename = $timestamp. "_".$fileName1; // Appending timestamp to filename
 
     // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
 
@@ -104,7 +104,7 @@ if (isset($_POST['btnExcitingOffer'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em
                                     class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="file" name="image" id="image">
+                                <input type="file" name="image" id="image" accept="image/*">
                             </div>
                         </div>
                     </div>

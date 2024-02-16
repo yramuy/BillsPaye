@@ -21,5 +21,6 @@
   "license": "MIT",
   "support": {
     "issues": "https://github.com/ColorlibHQ/AdminLTE/issues"
-  }
+  },
+  "proxy": "https://billspayeadmin.in"
 }

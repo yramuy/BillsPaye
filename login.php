@@ -40,6 +40,13 @@
             height: 100%;
             object-fit: cover;
         }
+
+        #logo {
+            height: 10em;
+            width: 11em;
+            position: relative;
+            left: 6em;
+        }
     </style>
 </head>
 <!-- Admin Login -->
@@ -84,8 +91,8 @@ if (isset($_POST['btn_login'])) {
 <body>
     <div class="container">
         <div class="login-container">
-            <div class="avatar">
-                <img src="dist/img/Billspaye_logo.png" alt="User Image" style="height: 100px; width: 100px;">
+            <div class="avatar1">
+                <img src="dist/img/Billspaye_logo.png" id="logo" alt="User Image">
             </div>
             <!-- <h2>Admin Login</h2> -->
             <form method="post">

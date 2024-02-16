@@ -56,7 +56,7 @@ if ($username == '') {
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="../dist/img/Billspaye_logo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="../dist/img/Billspaye_logo.png" alt="AdminLTELogo"  height="200" width="200">
         </div>
 
         <!-- Navbar -->

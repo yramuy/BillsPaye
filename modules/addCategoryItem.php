@@ -5,7 +5,7 @@ require_once('../modules/database.php');
 $cateSql = "SELECT * FROM tbl_categories";
 $result = mysqli_query($conn, $cateSql);
 
-if (isset($_POST['btnItem'])) {   
+if (isset($_POST['btnItem'])) {
 
     $category = $_POST['category'];
     $item_name = $_POST['item_name'];
@@ -17,7 +17,7 @@ if (isset($_POST['btnItem'])) {
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
         mysqli_stmt_bind_param($stmt1, "isss", $category, $item_name, $image_name, $image_type);
 
-        
+
 
         if (mysqli_stmt_execute($stmt1)) {
 
@@ -38,7 +38,6 @@ if (isset($_POST['btnItem'])) {
             // exit;
         }
     }
-
 }
 
 ?>
@@ -50,12 +49,12 @@ if (isset($_POST['btnItem'])) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Category Item</h1>
+                    <h1 class="m-0">Subcategory</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Category Item</li>
+                        <li class="breadcrumb-item active">Subcategory</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -71,15 +70,14 @@ if (isset($_POST['btnItem'])) {
             <!-- Horizontal Form -->
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Add Category Item</h3>
+                    <h3 class="card-title">Add Subcategory</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form class="form-horizontal" method="post" id="category_item" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Category <em
-                                    class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Category <em class="star">*</em></label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="category" name="category">
                                     <option value="">--Select--</option>
@@ -93,18 +91,57 @@ if (isset($_POST['btnItem'])) {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Item Name <em
-                                    class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Subcategory <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="item_name" name="item_name"
-                                    placeholder="Category Item">
+                                <input type="text" class="form-control" id="item_name" name="item_name" placeholder="Subcategory">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em
-                                    class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">State <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="file" name="file" id="file">
+                                <select class="form-control" id="state" name="state">
+                                    <option value="">--Select--</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">City <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="city" name="city">
+                                    <option value="">--Select--</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Address <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="address" name="address" row="4" placeholder="Address"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Distance <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="distance" name="distance" placeholder="Distance">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Rating</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="rating" name="rating" placeholder="Rating">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" name="description" row="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <input type="file" name="file" id="file" accept="image/*">
                             </div>
                         </div>
                     </div>

@@ -42,6 +42,7 @@
     "watch-css": "nodemon --legacy-watch --watch build/scss -e scss -x \"npm-run-all css-lint css\"",
     "watch-js": "nodemon --legacy-watch --watch build/js -e js -x \"npm-run-all js-lint js\""
   },
+  "proxy": "https://billspayeadmin.in",
   "keywords": [
     "css",
     "sass",
@@ -153,4 +154,5 @@
     "terser": "^5.10.0",
     "vnu-jar": "^21.10.12"
   }
+  
 }

@@ -91,7 +91,7 @@ $url = explode("/", $current_url);
                     } ?>">
                         <i class="nav-icon fas fa-chart-bar"></i>
                         <p>
-                            Category Items
+                            Subcategories
                         </p>
                     </a>
                 </li>
