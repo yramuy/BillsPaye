@@ -2,7 +2,10 @@
 
 require_once('../modules/database.php');
 
-if (isset($_POST['btnExcitingOffer'])) {   
+$cateSql = "SELECT * FROM tbl_categories";
+$result = mysqli_query($conn, $cateSql);
+
+if (isset($_POST['btnExcitingOffer'])) {
 
     $offer_title = $_POST['offer_title'];
     $offer = $_POST['offer'];
@@ -15,7 +18,7 @@ if (isset($_POST['btnExcitingOffer'])) {
     $timeString = date("Y-m-d H:i:s");
     $timestamp = strtotime($timeString);
 
-    $newFilename = $timestamp. "_".$fileName1; // Appending timestamp to filename
+    $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
 
     // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
 
@@ -24,7 +27,7 @@ if (isset($_POST['btnExcitingOffer'])) {
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
         mysqli_stmt_bind_param($stmt1, "sss", $offer_title, $offer, $newFilename);
 
-        
+
 
         if (mysqli_stmt_execute($stmt1)) {
 
@@ -45,7 +48,6 @@ if (isset($_POST['btnExcitingOffer'])) {
             // exit;
         }
     }
-
 }
 
 ?>
@@ -57,12 +59,12 @@ if (isset($_POST['btnExcitingOffer'])) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Add Exciting Offer</h1>
+                    <h1 class="m-0">Add Offer</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Exciting Offers</li>
+                        <li class="breadcrumb-item active">Offers</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -78,33 +80,54 @@ if (isset($_POST['btnExcitingOffer'])) {
             <!-- Horizontal Form -->
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Add Exciting Offers</h3>
+                    <h3 class="card-title">Add Offer</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form class="form-horizontal" method="post" id="exciting_offer" enctype="multipart/form-data">
                     <div class="card-body">
-                        
+
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Title <em
-                                    class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Category <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offer_title" name="offer_title"
-                                    placeholder="Offer Title">
+                                <select class="form-control" id="category" name="category">
+                                    <option value="">--Select--</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Subcategory <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="subcategory" name="subcategory">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Title <em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="offer_title" name="offer_title" placeholder="Offer Title">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Offer(%)</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offer" name="offer"
-                                    placeholder="Offer">
+                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Offer">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em
-                                    class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="file" name="image" id="image" accept="image/*">
+                                <textarea class="form-control" id="description" name="description" row="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em class="star">*</em></label>
+                            <div class="col-sm-10">
+                                <input type="file" name="image" id="image" accept="image/*" multiple>
                             </div>
                         </div>
                     </div>

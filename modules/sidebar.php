@@ -130,42 +130,31 @@ $url = explode("/", $current_url);
                     } ?>">
                         <i class="nav-icon fas fa-gift"></i>
                         <p>
-                            Most Exciting Offers
-                        </p>
-                    </a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a href="topPicks.php" class="nav-link <?php //if ($url[5]) {
-                        //echo $url[5] == "topPicks.php" ? "active" : "";
-                    //} ?>">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Top Picks
-                        </p>
-                    </a>
-                </li> -->
-
-                <li class="nav-item">
-                    <a href="offers.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "offers.php" ? "active" : "";
-                    } ?>">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
                             Offers
                         </p>
                     </a>
                 </li>
-
                 <li class="nav-item">
-                    <a href="wishlist.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "wishlist.php" ? "active" : "";
+                    <a href="menus.php" class="nav-link <?php if ($url[5]) {
+                        echo $url[5] == "menus.php" ? "active" : "";
                     } ?>">
+                        <i class="nav-icon fas fa-bars menu-icon"></i>
+                        <p>
+                            Menu
+                        </p>
+                    </a>
+                </li>
+
+                <!-- <li class="nav-item">
+                    <a href="wishlist.php" class="nav-link <?php //if ($url[5]) {
+                        //echo $url[5] == "wishlist.php" ? "active" : "";
+                    //} ?>">
                         <i class="nav-icon fas fa-heart"></i>
                         <p>
                             Wishlist
                         </p>
                     </a>
-                </li>
+                </li> -->
                 
 
             </ul>

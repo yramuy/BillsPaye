@@ -4,7 +4,9 @@
 
 require_once('../modules/database.php');
 
-$sql = "SELECT * FROM tbl_most_exciting_offers";
+$sql = "SELECT o.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_offers o 
+LEFT JOIN tbl_categories c ON o.cat_id = c.id
+LEFT JOIN tbl_sub_categories sc ON o.sub_cat_id = sc.id";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -15,12 +17,12 @@ $result = mysqli_query($conn, $sql);
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Most Exciting Offers</h1>
+                    <h1 class="m-0">Offers</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Most Exciting Offers</li>
+                        <li class="breadcrumb-item active">Offers</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -44,15 +46,17 @@ $result = mysqli_query($conn, $sql);
 
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Most Exciting Offers</h3>
+                    <h3 class="card-title">Offers</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <a class="btn btn-primary float-right" href="addExcitingOffers.php">Add Exciting Offers</a>
+                    <a class="btn btn-primary float-right" href="addExcitingOffers.php">Add Offer</a>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SNo</th>
+                                <th>Category</th>
+                                <th>Subcategory</th>
                                 <th>Offer Title</th>
                                 <th>Offer(%)</th>
                                 <th>Offer Date</th>
@@ -65,17 +69,19 @@ $result = mysqli_query($conn, $sql);
                                 $sno = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     // Path to the image file
-                                    $imagePath = "../uploads/".$row['image_name']; // Update this with the actual path to your image file
-                                     ?>
+                                    $imagePath = "../uploads/" . $row['image_name']; // Update this with the actual path to your image file
+                            ?>
                                     <tr>
                                         <td><?php echo $sno; ?></td>
+                                        <td><?php echo $row['category']; ?></td>
+                                        <td><?php echo $row['subcategory']; ?></td>
                                         <td><?php echo $row['offer_title']; ?></td>
                                         <td><?php echo $row['offer']; ?></td>
                                         <td><?php echo $row['offer_date']; ?></td>
                                         <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
-                                        
+
                                     </tr>
-                                    <?php $sno++;
+                            <?php $sno++;
                                 }
                             }
                             ?>

@@ -2,36 +2,53 @@
 
 require_once('../modules/database.php');
 
-$cateSql = "SELECT * FROM tbl_categories";
-$result = mysqli_query($conn, $cateSql);
+// $cateSql = "SELECT * FROM tbl_categories";
+// $result = mysqli_query($conn, $cateSql);
+
+$stateSql = "SELECT * FROM states";
+$stateQuery = mysqli_query($conn, $stateSql);
 
 if (isset($_POST['btnItem'])) {
 
     $category = $_POST['category'];
-    $item_name = $_POST['item_name'];
+    $sub_category_name = $_POST['sub_category_name'];
+    $state = $_POST['state'];
+    $city = $_POST['city'];
+    $address = $_POST['address'];
+    $distance = $_POST['distance'];
+    $rating = $_POST['rating'];
+    $description = $_POST['description'];
     $image_type = $_FILES['file']['type'];
-    $image_name = $_FILES['file']['name'];
+    $newFilename = $_FILES['file']['name'];
 
-    $sql1 = "INSERT INTO tbl_category_items (category_id, item_name, file_name, file_type) VALUES(?,?,?,?)";
+    // Remove brackets and their contents
+    $fileName = preg_replace('/\([^)]*\)/', '', $newFilename);
+
+    // Remove spaces
+    $fileName1 = str_replace(' ', '', $fileName);
+
+    $timeString = date("Y-m-d H:i:s");
+    $timestamp = strtotime($timeString);
+
+    $image_name = $timestamp. "_".$fileName1; // Appending timestamp to filename
+
+    $sql1 = "INSERT INTO tbl_sub_categories (category_id, sub_category_name,state_id,city_id,sub_cat_description,sub_cat_address,rating,distance,file_name,file_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
-        mysqli_stmt_bind_param($stmt1, "isss", $category, $item_name, $image_name, $image_type);
-
-
+        mysqli_stmt_bind_param($stmt1, "isiissssss", $category, $sub_category_name, $state, $city, $description, $address, $rating, $distance, $image_name, $image_type);
 
         if (mysqli_stmt_execute($stmt1)) {
 
             if ($image_name) {
                 $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
-                $targetFile = $targetDir . basename($_FILES["file"]["name"]);
+                $targetFile = $targetDir . basename($image_name);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile);
             }
-
 
             // Redirect to another page
             echo '<script>
             window.location.href = "categoryItems.php";
-            alert("Category Item saved successfully!");            
+            alert("Subcategory saved successfully!");            
                        
             </script>';
             // header("Location: categoryList.php");
@@ -81,19 +98,13 @@ if (isset($_POST['btnItem'])) {
                             <div class="col-sm-10">
                                 <select class="form-control" id="category" name="category">
                                     <option value="">--Select--</option>
-                                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                                        <option value="<?php echo $row['id']; ?>">
-                                            <?php echo $row['name']; ?>
-                                        </option>
-                                    <?php } ?>
-
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Subcategory <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="item_name" name="item_name" placeholder="Subcategory">
+                                <input type="text" class="form-control" id="sub_category_name" name="sub_category_name" placeholder="Subcategory">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -101,7 +112,9 @@ if (isset($_POST['btnItem'])) {
                             <div class="col-sm-10">
                                 <select class="form-control" id="state" name="state">
                                     <option value="">--Select--</option>
-
+                                    <?php while ($srow = mysqli_fetch_assoc($stateQuery)) { ?>
+                                        <option value="<?php echo $srow['id']; ?>"><?php echo $srow['name']; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>

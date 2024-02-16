@@ -82,8 +82,6 @@
 
 </html>
 
-
-
 <script>
     $(function() {
         // $.validator.setDefaults({
@@ -197,10 +195,9 @@
         });
     });
 </script>
-
-
 <script>
     $(function() {
+
         $("#example1").DataTable({
             "responsive": true,
             "lengthChange": false,
@@ -215,6 +212,80 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
+        });
+    });
+</script>
+<script>
+    $(function() {
+
+        var ajaxUrl = '<?php echo '../modules/ajax_data.php'; ?>';
+        var subCatUrl = '<?php echo '../modules/sub_categotry_ajax.php'; ?>';
+        
+
+        // Categories
+        getCategories();
+
+        function getCategories() {
+
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    act: 'category'
+                },
+                dataType: 'json',
+                success: function(catRes) {
+                    var optionHtml = '<option value="">--Select--</option>';
+                    for (let index2 = 0; index2 < catRes.length; index2++) {
+                        optionHtml += '<option value=' + catRes[index2]['id'] + '>' + catRes[index2]['name'] + '</option>';
+                    }
+                    $('#category').html(optionHtml);
+                }
+            });
+        }
+
+        // City Ajax Data
+        $('#state').change(function() {
+            var state = $(this).val();
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    state_id: state,
+                    act: 'states'
+                },
+                dataType: 'json',
+                success: function(stateRes) {
+                    var optionHtml1 = '<option value="">--Select--</option>';
+                    for (let index = 0; index < stateRes.length; index++) {
+                        optionHtml1 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['city'] + '</option>';
+                    }
+                    $('#city').html(optionHtml1);
+
+                }
+            });
+        });
+
+        // Subcategory Ajax Data
+        $('#category').change(function() {
+            var category = $(this).val();
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    category: category,
+                    act: 'subcategory'
+                },
+                dataType: 'json',
+                success: function(subcatRes) {
+                    var optionHtml2 = '<option value="">--Select--</option>';
+                    for (let index2 = 0; index2 < subcatRes.length; index2++) {
+                        optionHtml2 += '<option value=' + subcatRes[index2]['id'] + '>' + subcatRes[index2]['sub_category_name'] + '</option>';
+                    }
+                    $('#subcategory').html(optionHtml2);
+
+                }
+            });
         });
     });
 </script>

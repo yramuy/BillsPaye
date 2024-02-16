@@ -4,7 +4,7 @@
 
 require_once('../modules/database.php');
 
-$sql = "SELECT ci.*,c.name as category FROM tbl_category_items ci LEFT JOIN tbl_categories c ON ci.category_id = c.id";
+$sql = "SELECT ci.*,c.name as category FROM tbl_sub_categories ci LEFT JOIN tbl_categories c ON ci.category_id = c.id";
 $result = mysqli_query($conn, $sql);
 
 
@@ -45,8 +45,10 @@ $result = mysqli_query($conn, $sql);
                             <tr>
                                 <th>SNo</th>
                                 <th>Category</th>
-                                <th>Item Name</th>
-                                <th>Image Name</th>
+                                <th>Subcategory</th>                                
+                                <th>Address</th>
+                                <th>Distance</th>
+                                <th>Rating</th>
                                 <th>Image</th>
                             </tr>
                         </thead>
@@ -67,11 +69,19 @@ $result = mysqli_query($conn, $sql);
                                             <?php echo $row['category']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $row['item_name']; ?>
+                                            <?php echo $row['sub_category_name']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $row['file_name']; ?>
+                                            <?php echo $row['sub_cat_address']; ?>
                                         </td>
+                                        
+                                        <td>
+                                            <?php echo $row['distance']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['rating']; ?>
+                                        </td>
+                                        
                                         <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
 
                                     </tr>
