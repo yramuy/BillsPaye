@@ -1,14 +1,12 @@
 <?php require_once('../modules/header.php'); ?>
-<?php
 
-require_once('../modules/database.php');
+<?php require_once('../modules/database.php');
 
-if (isset($_POST['btnExcitingOffer'])) {
+if (isset($_POST['btnMenu'])) {
 
     $category = $_POST['category'];
     $subcategory = $_POST['subcategory'];
-    $offer_title = $_POST['offer_title'];
-    $offer = $_POST['offer'];
+    $menu_name = $_POST['menu_title'];
     $description = $_POST['description'];
     $image_name = $_FILES['image']['name'];
     $created_by = $_SESSION['user_id'];
@@ -25,10 +23,10 @@ if (isset($_POST['btnExcitingOffer'])) {
 
     // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
 
-    $sql1 = "INSERT INTO tbl_offers (cat_id, sub_cat_id, offer_title, offer, offer_description, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?)";
+    $sql1 = "INSERT INTO tbl_menus (cat_id, sub_cat_id, menu_name, menu_description, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?)";
 
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
-        mysqli_stmt_bind_param($stmt1, "iissssis", $category,$subcategory,$offer_title,$offer,$description,$newFilename,$created_by,$created_on);
+        mysqli_stmt_bind_param($stmt1, "iisssis", $category, $subcategory, $menu_name, $description, $newFilename, $created_by, $created_on);
 
         if (mysqli_stmt_execute($stmt1)) {
 
@@ -41,8 +39,8 @@ if (isset($_POST['btnExcitingOffer'])) {
 
             // Redirect to another page
             echo '<script>
-            window.location.href = "mostExcitingOffers.php";
-            alert("Offer saved successfully!");            
+            window.location.href = "menus.php";
+            alert("Menu saved successfully!");            
                        
             </script>';
             // header("Location: categoryList.php");
@@ -60,12 +58,12 @@ if (isset($_POST['btnExcitingOffer'])) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Add Offer</h1>
+                    <h1 class="m-0">Add Menu</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Offers</li>
+                        <li class="breadcrumb-item active">Menu</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -81,7 +79,7 @@ if (isset($_POST['btnExcitingOffer'])) {
             <!-- Horizontal Form -->
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Add Offer</h3>
+                    <h3 class="card-title">Add Menu</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -108,25 +106,20 @@ if (isset($_POST['btnExcitingOffer'])) {
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Title <em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Menu Title <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offer_title" name="offer_title" placeholder="Offer Title">
+                                <input type="text" class="form-control" id="menu_title" name="menu_title" placeholder="Menu Title">
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer(%)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Offer">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description <em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description </label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" id="description" name="description" row="4"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Image<em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Menu Image<em class="star">*</em></label>
                             <div class="col-sm-10">
                                 <input type="file" name="image" id="image" accept="image/*" multiple>
                             </div>
@@ -134,8 +127,8 @@ if (isset($_POST['btnExcitingOffer'])) {
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-info" name="btnExcitingOffer">Save</button>
-                        <a type="submit" class="btn btn-default" href="mostExcitingOffers.php">Cancel</a>
+                        <button type="submit" class="btn btn-info" name="btnMenu">Save</button>
+                        <a type="submit" class="btn btn-default" href="menus.php">Cancel</a>
                     </div>
                     <!-- /.card-footer -->
                 </form>

@@ -136,11 +136,21 @@ $url = explode("/", $current_url);
                 </li>
                 <li class="nav-item">
                     <a href="menus.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "menus.php" ? "active" : "";
+                        echo $url[5] == "menus.php" || $url[5] == "addMenu.php" ? "active" : "";
                     } ?>">
                         <i class="nav-icon fas fa-bars menu-icon"></i>
                         <p>
                             Menu
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="clients.php" class="nav-link <?php if ($url[5]) {
+                        echo $url[5] == "clients.php" || $url[5] == "clients.php" ? "active" : "";
+                    } ?>">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Clients
                         </p>
                     </a>
                 </li>

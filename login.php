@@ -67,6 +67,7 @@ if (isset($_POST['btn_login'])) {
         $user_name = $row['user_name'];
         $email = $row['email'];
         $mobile_number = $row['mobile_number'];
+        $user_id = $row['id'];
 
         $verify = password_verify($password, $user_password);
 
@@ -77,6 +78,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['user_name'] = $user_name;
             $_SESSION['email'] = $email;
             $_SESSION['mobile_number'] = $mobile_number;
+            $_SESSION['user_id'] = $user_id;
             // Redirect to another page
             header("Location: index.php");
             exit;

@@ -116,6 +116,16 @@ $url = explode("/", $current_url);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="modules/clients.php" class="nav-link <?php if ($url[5]) {
+                        echo $url[5] == "clients.php" || $url[5] == "clients.php" ? "active" : "";
+                    } ?>">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Clients
+                        </p>
+                    </a>
+                </li>
 
                 <!-- <li class="nav-item">
                     <a href="modules/wishlist.php" class="nav-link <?php //if ($url[5]) {

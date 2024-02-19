@@ -4,9 +4,9 @@
 
 require_once('../modules/database.php');
 
-$sql = "SELECT o.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_offers o 
-LEFT JOIN tbl_categories c ON o.cat_id = c.id
-LEFT JOIN tbl_sub_categories sc ON o.sub_cat_id = sc.id";
+$sql = "SELECT m.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_menus m
+LEFT JOIN tbl_categories c ON m.cat_id = c.id
+LEFT JOIN tbl_sub_categories sc ON m.sub_cat_id = sc.id";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -17,12 +17,12 @@ $result = mysqli_query($conn, $sql);
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Offers</h1>
+                    <h1 class="m-0">Clients</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Offers</li>
+                        <li class="breadcrumb-item active">Clients</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -46,19 +46,18 @@ $result = mysqli_query($conn, $sql);
 
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Offers</h3>
+                    <h3 class="card-title">Clients</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <a class="btn btn-primary float-right" href="addExcitingOffers.php">Add Offer</a>
+                    <a class="btn btn-primary float-right" href="addClient.php">Add Client</a>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SNo</th>
                                 <th>Category</th>
                                 <th>Subcategory</th>
-                                <th>Offer Title</th>
-                                <th>Offer(%)</th>
+                                <th>Menu Title</th>
                                 <th>Image</th>
                             </tr>
                         </thead>
@@ -74,8 +73,7 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $sno; ?></td>
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['subcategory']; ?></td>
-                                        <td><?php echo $row['offer_title']; ?></td>
-                                        <td><?php echo $row['offer']; ?></td>                                        
+                                        <td><?php echo $row['menu_name']; ?></td>                                    
                                         <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
 
                                     </tr>

@@ -5,8 +5,8 @@ require_once('../modules/database.php');
 // $cateSql = "SELECT * FROM tbl_categories";
 // $result = mysqli_query($conn, $cateSql);
 
-$stateSql = "SELECT * FROM states";
-$stateQuery = mysqli_query($conn, $stateSql);
+// $stateSql = "SELECT * FROM states";
+// $stateQuery = mysqli_query($conn, $stateSql);
 
 if (isset($_POST['btnItem'])) {
 
@@ -30,7 +30,7 @@ if (isset($_POST['btnItem'])) {
     $timeString = date("Y-m-d H:i:s");
     $timestamp = strtotime($timeString);
 
-    $image_name = $timestamp. "_".$fileName1; // Appending timestamp to filename
+    $image_name = $timestamp . "_" . $fileName1; // Appending timestamp to filename
 
     $sql1 = "INSERT INTO tbl_sub_categories (category_id, sub_category_name,state_id,city_id,sub_cat_description,sub_cat_address,rating,distance,file_name,file_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
@@ -112,9 +112,7 @@ if (isset($_POST['btnItem'])) {
                             <div class="col-sm-10">
                                 <select class="form-control" id="state" name="state">
                                     <option value="">--Select--</option>
-                                    <?php while ($srow = mysqli_fetch_assoc($stateQuery)) { ?>
-                                        <option value="<?php echo $srow['id']; ?>"><?php echo $srow['name']; ?></option>
-                                    <?php } ?>
+
                                 </select>
                             </div>
                         </div>

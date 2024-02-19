@@ -220,7 +220,7 @@
 
         var ajaxUrl = '<?php echo '../modules/ajax_data.php'; ?>';
         var subCatUrl = '<?php echo '../modules/sub_categotry_ajax.php'; ?>';
-        
+
 
         // Categories
         getCategories();
@@ -244,6 +244,27 @@
             });
         }
 
+        //States dropdown
+        GetStates();
+
+        function GetStates() {
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    act: 'state'
+                },
+                dataType: 'json',
+                success: function(stateRes) {
+                    var optionHtml2 = '<option value="">--Select--</option>';
+                    for (let index = 0; index < stateRes.length; index++) {
+                        optionHtml2 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['name'] + '</option>';
+                    }
+                    $('#state').html(optionHtml2);
+                }
+            });
+        }
+
         // City Ajax Data
         $('#state').change(function() {
             var state = $(this).val();
@@ -252,13 +273,13 @@
                 type: 'POST',
                 data: {
                     state_id: state,
-                    act: 'states'
+                    act: 'city'
                 },
                 dataType: 'json',
-                success: function(stateRes) {
+                success: function(cityRes) {
                     var optionHtml1 = '<option value="">--Select--</option>';
-                    for (let index = 0; index < stateRes.length; index++) {
-                        optionHtml1 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['city'] + '</option>';
+                    for (let index = 0; index < cityRes.length; index++) {
+                        optionHtml1 += '<option value=' + cityRes[index]['id'] + '>' + cityRes[index]['city'] + '</option>';
                     }
                     $('#city').html(optionHtml1);
 

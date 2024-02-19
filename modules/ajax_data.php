@@ -2,7 +2,7 @@
 require_once('../modules/database.php');
 
 
-if ($_POST['act'] == 'states') {
+if ($_POST['act'] == 'city') {
     $state_id = $_POST['state_id'];
 
     $citySql = "SELECT * FROM cities WHERE state_id = $state_id";
@@ -46,4 +46,17 @@ if ($_POST['act'] == 'category') {
     }
 
     echo json_encode($catArr);
+}
+
+if ($_POST['act'] == 'state') {
+    $stateSql = "SELECT * FROM states";
+    $stateQuery = mysqli_query($conn, $stateSql);
+    $stateArr = array();
+    if(mysqli_num_rows($stateQuery) > 0) {
+        while ($stateRow = mysqli_fetch_assoc($stateQuery)) {
+            array_push($stateArr, $stateRow);
+        }
+    }
+
+    echo json_encode($stateArr);
 }
