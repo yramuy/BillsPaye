@@ -15,12 +15,16 @@ $current_url = $protocol . $server_name . $request_uri;
 // echo "Current URL: " . $current_url;
 $url = explode("/", $current_url);
 
+// Retrieve data from the session
+$username = $_SESSION['user_name'];
+$user_role_id = $_SESSION['user_role_id'];
+$user_role = $_SESSION['user_role'];
+
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
-        <img src="dist/img/Billspaye_logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8; height: 150px;">
+        <img src="dist/img/Billspaye_logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; height: 150px;">
         <span class="brand-text font-weight-light">Bills Paye</span>
     </a>
 
@@ -32,10 +36,8 @@ $url = explode("/", $current_url);
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <?php // Retrieve data from the session
-                $username = $_SESSION['user_name']; ?>
                 <a href="#" class="d-block">
-                    <?php echo $username; ?>
+                    <?php echo $user_role . '</br>' . $username; ?>
                 </a>
             </div>
         </div>
@@ -55,89 +57,95 @@ $url = explode("/", $current_url);
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                
-
-                <!-- <li class="nav-item">
-                    <a href="index.php" class="nav-link <?php echo $url[4] == "index.php" ? "active" : ""; ?>">
-                    <i class="nav-icon fas fa-th"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li> -->
-
                 <li class="nav-item">
                     <a href="index.php" class="nav-link <?php if ($url[4]) {
-                        echo $url[4] == "index.php" ? "active" : "";
-                    } ?>">
+                                                            echo $url[4] == "index.php" ? "active" : "";
+                                                        } ?>">
                         <i class="fas fa-tachometer-alt nav-icon"></i>
                         <p>
-                        Dashboard
+                            Dashboard
                         </p>
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="modules/categoryList.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "categoryList.php" || $url[5] == "category.php" ? "active" : "";
-                    } ?>">
-                        <i class="nav-icon fas fa-folder"></i>
-                        <p>
-                            Categories
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="modules/categoryItems.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "categoryItems.php" || $url[5] == "addCategoryItem.php" ? "active" : "";
-                    } ?>">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>
-                            Subcategories
-                        </p>
-                    </a>
-                </li>
+                <?php if ($user_role_id == 1) { ?>
+                    <li class="nav-item">
+                        <a href="modules/users.php" class="nav-link <?php if ($url[5]) {
+                                                                        echo $url[5] == "users.php" || $url[5] == "users.php" ? "active" : "";
+                                                                    } ?>">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Users
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="modules/categoryList.php" class="nav-link <?php if ($url[5]) {
+                                                                                echo $url[5] == "categoryList.php" || $url[5] == "category.php" ? "active" : "";
+                                                                            } ?>">
+                            <i class="nav-icon fas fa-folder"></i>
+                            <p>
+                                Categories
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="modules/categoryItems.php" class="nav-link <?php if ($url[5]) {
+                                                                                echo $url[5] == "categoryItems.php" || $url[5] == "addCategoryItem.php" ? "active" : "";
+                                                                            } ?>">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>
+                                Subcategories
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a href="modules/mostExcitingOffers.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "mostExcitingOffers.php" || $url[5] == "addExcitingOffers.php" ? "active" : "";
-                    } ?>">
+                                                                                    echo $url[5] == "mostExcitingOffers.php" || $url[5] == "addExcitingOffers.php" ? "active" : "";
+                                                                                } ?>">
                         <i class="nav-icon fas fa-gift"></i>
                         <p>
                             Offers
                         </p>
                     </a>
-                </li>               
+                </li>
 
                 <li class="nav-item">
                     <a href="modules/menus.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "menus.php" ? "active" : "";
-                    } ?>">
+                                                                    echo $url[5] == "menus.php" ? "active" : "";
+                                                                } ?>">
                         <i class="nav-icon fas fa-bars menu-icon"></i>
                         <p>
                             Menu
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="modules/clients.php" class="nav-link <?php if ($url[5]) {
-                        echo $url[5] == "clients.php" || $url[5] == "clients.php" ? "active" : "";
-                    } ?>">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Clients
-                        </p>
-                    </a>
-                </li>
+                <?php if ($user_role_id == 1) { ?>
+                    <li class="nav-item">
+                        <a href="modules/clients.php" class="nav-link <?php if ($url[5]) {
+                                                                            echo $url[5] == "clients.php" || $url[5] == "addClient.php" ? "active" : "";
+                                                                        } ?>">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Clients
+                            </p>
+                        </a>
+                    </li>
+                    
+                <?php } ?>
 
                 <!-- <li class="nav-item">
                     <a href="modules/wishlist.php" class="nav-link <?php //if ($url[5]) {
-                        //echo $url[5] == "wishlist.php" ? "active" : "";
-                    //} ?>">
+                                                                    //echo $url[5] == "wishlist.php" ? "active" : "";
+                                                                    //} 
+                                                                    ?>">
                         <i class="nav-icon fas fa-heart"></i>
                         <p>
                             Wishlist
                         </p>
                     </a>
                 </li> -->
-                
+
 
             </ul>
         </nav>

@@ -4,7 +4,7 @@
 
 require_once('../modules/database.php');
 
-$sql = "SELECT ci.*,c.name as category FROM tbl_sub_categories ci LEFT JOIN tbl_categories c ON ci.category_id = c.id";
+$sql = "SELECT ci.*,c.name as category FROM tbl_sub_categories ci LEFT JOIN tbl_categories c ON ci.category_id = c.id ORDER BY ci.id DESC";
 $result = mysqli_query($conn, $sql);
 
 

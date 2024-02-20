@@ -1,6 +1,11 @@
 <?php
 require_once('layout/header.php');
 
+require_once('modules/database.php');
+$query = "SELECT count(*) as usercnt, (SELECT COUNT(*) FROM tbl_user WHERE user_role_id = 3) as clientcnt FROM tbl_user WHERE user_role_id = 2";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result);
+
 ?>
 
 <!-- Main content -->
@@ -27,14 +32,14 @@ require_once('layout/header.php');
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3><?php echo $row['usercnt']; ?></h3>
 
                         <p>User Registrations</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="modules/users.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -42,14 +47,14 @@ require_once('layout/header.php');
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3><?php echo $row['clientcnt']; ?></h3>
 
                         <p>Clients</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="modules/clients.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->

@@ -6,7 +6,7 @@ require_once('../modules/database.php');
 
 $sql = "SELECT m.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_menus m
 LEFT JOIN tbl_categories c ON m.cat_id = c.id
-LEFT JOIN tbl_sub_categories sc ON m.sub_cat_id = sc.id";
+LEFT JOIN tbl_sub_categories sc ON m.sub_cat_id = sc.id ORDER BY m.id DESC";
 $result = mysqli_query($conn, $sql);
 
 ?>

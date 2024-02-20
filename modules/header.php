@@ -35,7 +35,7 @@
 session_start();
 $username = $_SESSION['user_name'];
 if ($username == '') {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 ?>
