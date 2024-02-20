@@ -4,9 +4,11 @@
 
 require_once('../modules/database.php');
 
-$sql = "SELECT m.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_menus m
-LEFT JOIN tbl_categories c ON m.cat_id = c.id
-LEFT JOIN tbl_sub_categories sc ON m.sub_cat_id = sc.id";
+$sql = "SELECT u.*,c.name as category,sc.sub_category_name,s.name as state,ci.city FROM tbl_user u 
+LEFT JOIN tbl_categories c ON u.category = c.id
+LEFT JOIN tbl_sub_categories sc ON u.subcategory = sc.id
+LEFT JOIN states s ON u.state_id = s.id
+LEFT JOIN cities ci ON u.city_id = ci.id WHERE u.user_role_id = 3";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -55,10 +57,13 @@ $result = mysqli_query($conn, $sql);
                         <thead>
                             <tr>
                                 <th>SNo</th>
-                                <th>Category</th>
-                                <th>Subcategory</th>
-                                <th>Menu Title</th>
-                                <th>Image</th>
+                                <th>Client Name</th>
+                                <th>Email</th>
+                                <th>Mobile Number</th>
+                                <th>City</th>
+                                <th>Address</th>
+                                <th>Business Category</th>
+                                <th>Business Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,11 +76,14 @@ $result = mysqli_query($conn, $sql);
                             ?>
                                     <tr>
                                         <td><?php echo $sno; ?></td>
+                                        <td><?php echo $row['user_name']; ?></td>
+                                        <td><?php echo $row['email']; ?></td>
+                                        <td><?php echo $row['mobile_number']; ?></td>
+                                        <td><?php echo $row['city']; ?></td>
+                                        <td><?php echo $row['address']; ?></td>
                                         <td><?php echo $row['category']; ?></td>
-                                        <td><?php echo $row['subcategory']; ?></td>
-                                        <td><?php echo $row['menu_name']; ?></td>                                    
-                                        <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
-
+                                        <td><?php echo $row['sub_category_name']; ?></td>
+                                        
                                     </tr>
                             <?php $sno++;
                                 }

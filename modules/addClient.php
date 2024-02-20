@@ -14,6 +14,8 @@ if (isset($_POST['btnClient'])) {
     $pincode = $_POST['pincode'];
     $gst_number = $_POST['gst_number'];
     $image_name = $_FILES['image']['name'];
+    $aadhar_image = $_FILES['aadhar_image']['name'];
+    $certificate = $_FILES['certificate']['name'];
     $created_by = $_SESSION['user_id'];
     $created_on = date("Y-m-d H:i:s");
     $roleId = 3;
@@ -22,18 +24,44 @@ if (isset($_POST['btnClient'])) {
     $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
     // Remove spaces
     $fileName1 = str_replace(' ', '', $fileName);
-
     $timeString = date("Y-m-d H:i:s");
     $timestamp = strtotime($timeString);
-
     $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+    $contact_person = $_POST['contact_person'];
+    $category = $_POST['category'];
+    $subcategory = $_POST['subcategory'];
+    $pan = $_POST['pan'];
+    $gst_number = $_POST['gst_number'];
+    $account_number = $_POST['account_number'];
+    $account_name = $_POST['account_name'];
+    $ifsc_code = $_POST['ifsc_code'];
+    $upi_id = $_POST['upi_id'];
+
+    // Remove spaces
+    $fileName1 = str_replace(' ', '', $fileName);
+    $timeString = date("Y-m-d H:i:s");
+    $timestamp = strtotime($timeString);
+    $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+
+    // Remove spaces
+    $aadhar_imagefileName = str_replace(' ', '', $aadhar_image);
+    $aadhar_imagetimeString = date("Y-m-d H:i:s");
+    $aadhar_imagetimestamp = strtotime($aadhar_imagetimeString);
+    $aadhar_imagenewFilename = $aadhar_imagetimestamp . "_" . $aadhar_imagefileName; // Appending timestamp to filename
+
+    // Remove spaces
+    $certificatefileName1 = str_replace(' ', '', $certificate);
+    $certificatetimeString = date("Y-m-d H:i:s");
+    $certificatetimestamp = strtotime($certificatetimeString);
+    $certificatenewFilename = $certificatetimestamp . "_" . $certificatefileName1; // Appending timestamp to filename
+    
 
     // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
 
-    $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, contact_person, category, subcategory, pan, account_number, account_name, ifsc_code, upi_id, aadhar_image, certificate, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
-        mysqli_stmt_bind_param($stmt1, "issisiiisssis", $roleId, $user_name, $email, $phone_number, $hashPassword, $state, $city, $pincode, $client_address, $gst_number, $newFilename, $created_by, $created_on);
+        mysqli_stmt_bind_param($stmt1, "issisiiisssiisissssssis", $roleId, $user_name, $email, $phone_number, $hashPassword, $state, $city, $pincode, $client_address, $gst_number, $contact_person, $category, $subcategory, $pan, $account_number, $account_name, $ifsc_code, $upi_id, $aadhar_imagenewFilename, $certificatenewFilename, $newFilename, $created_by, $created_on);
 
         if (mysqli_stmt_execute($stmt1)) {
 
@@ -41,6 +69,12 @@ if (isset($_POST['btnClient'])) {
                 $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
                 $targetFile = $targetDir . basename($newFilename);
                 move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+
+                $targetFile1 = $targetDir . basename($aadhar_imagenewFilename);
+                move_uploaded_file($_FILES["aadhar_image"]["tmp_name"], $targetFile1);
+
+                $targetFile2 = $targetDir . basename($certificatenewFilename);
+                move_uploaded_file($_FILES["certificate"]["tmp_name"], $targetFile2);
             }
 
 
@@ -185,13 +219,7 @@ if (isset($_POST['btnClient'])) {
                                 <input type="text" class="form-control" id="gst_number" name="gst_number" placeholder="GST Number">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">IFSC Code <em class="star">*</em></label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" placeholder="IFSC Code">
-                            </div>
-                        </div>
+                        
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Account Number <em class="star">*</em></label>
 
@@ -202,6 +230,16 @@ if (isset($_POST['btnClient'])) {
 
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Account Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">IFSC Code <em class="star">*</em></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" placeholder="IFSC Code">
+                            </div>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">UPI ID <em class="star">*</em></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="UPI ID">
                             </div>
                         </div>
                         <div class="form-group row">
