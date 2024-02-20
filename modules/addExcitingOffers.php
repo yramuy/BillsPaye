@@ -114,7 +114,7 @@ if (isset($_POST['btnExcitingOffer'])) {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer(%)</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Offer(%)<em class="star">*</em></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="offer" name="offer" placeholder="Offer">
                             </div>

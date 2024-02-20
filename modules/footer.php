@@ -125,6 +125,24 @@
                 category: {
                     required: true
                 },
+                sub_category_name: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+                distance: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
                 item_name: {
                     required: true
                 },
@@ -167,6 +185,21 @@
                 offer_title: {
                     required: true
                 },
+                category: {
+                    required: true
+                },
+                subcategory: {
+                    required: true
+                },
+                offer: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+                menu_title: {
+                    required: true
+                },
 
                 image: {
                     required: true
@@ -181,6 +214,78 @@
                     required: "Please choose file"
                 },
             },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    $(function() {
+        // $.validator.setDefaults({
+        //     submitHandler: function () {
+        //         alert("Category successful saved!");
+        //     }
+        // });
+        $('#client').validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                contact_person: {
+                    required: true
+                },
+                category: {
+                    required: true
+                },
+                subcategory: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email:true
+                },
+                phone_number: {
+                    required: true,
+                    number:true
+                },
+                password: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                pincode: {
+                    required: true
+                },
+                client_address: {
+                    required: true
+                },
+                pan: {
+                    required: true
+                },
+                gst_number: {
+                    required: true
+                },
+                upi_id: {
+                    required: true
+                },
+                
+            },
+            
             errorElement: 'span',
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');

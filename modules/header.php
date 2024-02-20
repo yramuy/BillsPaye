@@ -7,8 +7,7 @@
     <title>BillsPaye | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -41,9 +40,45 @@ if ($username == '') {
 ?>
 
 <style>
-    #category-error, #item_name-error, #item_image-error, #offer_title-error, #image-error {
+    #category-error,
+    #item_name-error,
+    #item_image-error,
+    #offer_title-error,
+    #image-error,
+    #sub_category_name-error,
+    #state-error,
+    #city-error,
+    #address-error,
+    #distance-error,
+    #description-error,
+    #file-error,
+    #subcategory-error,
+    #file-error,
+    #offer_title-error,
+    #offer-error,
+    #image-error,
+    #menu_title-error,#password-error, #email-error, #pincode-error, #client_address-error, #pan-error {
         display: inline;
         margin-left: 13.4em !important;
+    }
+
+    #first_name-error,
+    #contact_person-error {
+        display: inline;
+        margin-left: 13.4em !important;
+    }
+
+    #last_name-error,
+    #subcategory-error {
+        display: inline;
+        margin-left: 44.4em !important;
+        margin-top: -1.5em;
+    }
+
+    #subcategory-error, #phone_number-error, #city-error, #gst_number-error, #upi_id-error {
+        display: inline;
+        margin-left: 50.4em !important;
+        margin-top: -1.5em;
     }
 
     .star {
@@ -56,7 +91,7 @@ if ($username == '') {
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="../dist/img/Billspaye_logo.png" alt="AdminLTELogo"  height="200" width="200">
+            <img class="animation__shake" src="../dist/img/Billspaye_logo.png" alt="AdminLTELogo" height="200" width="200">
         </div>
 
         <!-- Navbar -->
@@ -126,8 +161,7 @@ if ($username == '') {
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                        role="button">
+                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>

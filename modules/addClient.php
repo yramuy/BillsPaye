@@ -124,7 +124,7 @@ if (isset($_POST['btnClient'])) {
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" method="post" id="exciting_offer" enctype="multipart/form-data">
+                <form class="form-horizontal" method="post" id="client" enctype="multipart/form-data">
                     <div class="card-body">
 
                         <div class="form-group row">
@@ -221,19 +221,19 @@ if (isset($_POST['btnClient'])) {
                         </div>
                         
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Account Number <em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Account Number </label>
 
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Account Number">
                             </div>
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Account Name <em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Account Name </label>
 
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Account Name">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">IFSC Code <em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">IFSC Code </label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" placeholder="IFSC Code">
                             </div>
@@ -243,17 +243,17 @@ if (isset($_POST['btnClient'])) {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Pan Document<em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Pan Document</label>
                             <div class="col-sm-4">
                                 <input type="file" name="image" id="image" accept="image/*" multiple>
                             </div>
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Aadhar Document<em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Aadhar Document</label>
                             <div class="col-sm-4">
                                 <input type="file" name="aadhar_image" id="aadhar_image" accept="image/*" multiple>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Certificate<em class="star">*</em></label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Certificate</label>
                             <div class="col-sm-4">
                                 <input type="file" name="certificate" id="certificate" accept="image/*" multiple>
                             </div>
