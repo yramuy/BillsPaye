@@ -1,10 +1,9 @@
-<?php require_once('../modules/header.php'); ?>
+<?php require_once('../modules/header.php');
 
-<?php
+$table_name = 'tbl_menus';
+$screen = 'menus.php';
 
-require_once('../modules/database.php');
-
-$sql = "SELECT m.*,c.name as category,sc.sub_category_name as subcategory FROM tbl_menus m
+$sql = "SELECT m.*,c.name as category,sc.sub_category_name as subcategory FROM $table_name m
 LEFT JOIN tbl_categories c ON m.cat_id = c.id
 LEFT JOIN tbl_sub_categories sc ON m.sub_cat_id = sc.id ORDER BY m.id DESC";
 $result = mysqli_query($conn, $sql);
@@ -59,6 +58,7 @@ $result = mysqli_query($conn, $sql);
                                 <th>Subcategory</th>
                                 <th>Menu Title</th>
                                 <th>Image</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,8 +73,12 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $sno; ?></td>
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['subcategory']; ?></td>
-                                        <td><?php echo $row['menu_name']; ?></td>                                    
+                                        <td><?php echo $row['menu_name']; ?></td>
                                         <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
+                                        <td>
+                                            <a href="addMenu.php?recordId=<?php echo $row['id']; ?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-danger" onClick="deleteItem('<?php echo $row['id']; ?>','<?php echo $table_name; ?>','<?php echo $screen;?>')"><i class="fas fa-trash"></i></a>
+                                        </td>
 
                                     </tr>
                             <?php $sno++;

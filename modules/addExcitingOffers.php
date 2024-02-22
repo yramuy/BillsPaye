@@ -1,7 +1,12 @@
-<?php require_once('../modules/header.php'); ?>
-<?php
+<?php require_once('../modules/header.php'); 
 
-require_once('../modules/database.php');
+// Edit Data
+if (isset($_GET['recordId'])) {
+    $offerId = $_GET['recordId'];
+    $offerQuery = "SELECT * FROM tbl_offers WHERE id = $offerId";
+    $offerSql = mysqli_query($conn, $offerQuery);
+    $row = mysqli_fetch_assoc($offerSql);
+}
 
 if (isset($_POST['btnExcitingOffer'])) {
 
@@ -38,11 +43,10 @@ if (isset($_POST['btnExcitingOffer'])) {
                 move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
             }
 
-
+            $_SESSION['message'] = 'Offer saved successfully!';
             // Redirect to another page
             echo '<script>
-            window.location.href = "mostExcitingOffers.php";
-            alert("Offer saved successfully!");            
+            window.location.href = "mostExcitingOffers.php";    
                        
             </script>';
             // header("Location: categoryList.php");

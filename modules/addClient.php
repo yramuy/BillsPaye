@@ -1,6 +1,4 @@
-<?php require_once('../modules/header.php'); ?>
-
-<?php require_once('../modules/database.php');
+<?php require_once('../modules/header.php'); 
 
 if (isset($_POST['btnClient'])) {
 
@@ -58,7 +56,7 @@ if (isset($_POST['btnClient'])) {
 
     // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
 
-    $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, contact_person, category, subcategory, pan, account_number, account_name, ifsc_code, upi_id, aadhar_image, certificate, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, contact_person, cat_id, sub_cat_id, pan, account_number, account_name, ifsc_code, upi_id, aadhar_image, certificate, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     if ($stmt1 = mysqli_prepare($conn, $sql1)) {
         mysqli_stmt_bind_param($stmt1, "issisiiisssiisissssssis", $roleId, $user_name, $email, $phone_number, $hashPassword, $state, $city, $pincode, $client_address, $gst_number, $contact_person, $category, $subcategory, $pan, $account_number, $account_name, $ifsc_code, $upi_id, $aadhar_imagenewFilename, $certificatenewFilename, $newFilename, $created_by, $created_on);
@@ -77,12 +75,10 @@ if (isset($_POST['btnClient'])) {
                 move_uploaded_file($_FILES["certificate"]["tmp_name"], $targetFile2);
             }
 
-
+            $_SESSION['message'] = 'Client saved successfully!';
             // Redirect to another page
             echo '<script>
-            window.location.href = "clients.php";
-            alert("Client saved successfully!");            
-                       
+            window.location.href = "clients.php";                       
             </script>';
             // header("Location: categoryList.php");
             // exit;

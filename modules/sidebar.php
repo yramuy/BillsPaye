@@ -12,15 +12,7 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $current_url = $protocol . $server_name . $request_uri;
 
 // Output the current URL
-$url = explode("/", $current_url);
-
-// if ($url[5] == "category.php") {
-//     $active = "active";
-// } else if ($url[5] == "mostExcitingOffers.php") {
-//     $active = "active";
-// } else {
-//     $active = "";
-// } 
+$url = explode("/", $current_url); 
 
 // Retrieve data from the session
 $username = $_SESSION['user_name'];
@@ -89,7 +81,7 @@ $user_role = $_SESSION['user_role'];
                     </li>
                     <li class="nav-item">
                         <a href="categoryList.php" class="nav-link <?php if ($url[5]) {
-                                                                        echo $url[5] == "categoryList.php" || $url[5] == "category.php" ? "active" : "";
+                                                                        echo $url[5] == "categoryList.php" || strpos($url[5], "category.php") !== false ? "active" : "";
                                                                     } ?>">
                             <i class="nav-icon fas fa-folder"></i>
                             <p>
@@ -99,7 +91,7 @@ $user_role = $_SESSION['user_role'];
                     </li>
                     <li class="nav-item">
                         <a href="categoryItems.php" class="nav-link <?php if ($url[5]) {
-                                                                        echo $url[5] == "categoryItems.php" || $url[5] == "addCategoryItem.php" ? "active" : "";
+                                                                        echo $url[5] == "categoryItems.php" || strpos($url[5], "addCategoryItem.php") !== false ? "active" : "";
                                                                     } ?>">
                             <i class="nav-icon fas fa-chart-bar"></i>
                             <p>
@@ -110,7 +102,7 @@ $user_role = $_SESSION['user_role'];
                 <?php } ?>
                 <li class="nav-item">
                     <a href="mostExcitingOffers.php" class="nav-link <?php if ($url[5]) {
-                                                                            echo $url[5] == "mostExcitingOffers.php" || $url[5] == "addExcitingOffers.php" ? "active" : "";
+                                                                            echo $url[5] == "mostExcitingOffers.php" || strpos($url[5], "addExcitingOffers.php") !== false ? "active" : "";
                                                                         } ?>">
                         <i class="nav-icon fas fa-gift"></i>
                         <p>
@@ -120,7 +112,7 @@ $user_role = $_SESSION['user_role'];
                 </li>
                 <li class="nav-item">
                     <a href="menus.php" class="nav-link <?php if ($url[5]) {
-                                                            echo $url[5] == "menus.php" || $url[5] == "addMenu.php" ? "active" : "";
+                                                            echo $url[5] == "menus.php" || strpos($url[5], "addMenu.php") !== false ? "active" : "";
                                                         } ?>">
                         <i class="nav-icon fas fa-bars menu-icon"></i>
                         <p>
@@ -131,7 +123,7 @@ $user_role = $_SESSION['user_role'];
                 <?php if ($user_role_id == 1) { ?>
                     <li class="nav-item">
                         <a href="clients.php" class="nav-link <?php if ($url[5]) {
-                                                                    echo $url[5] == "clients.php" || $url[5] == "addClient.php" ? "active" : "";
+                                                                    echo $url[5] == "clients.php" || strpos($url[5], "addClient.php") !== false ? "active" : "";
                                                                 } ?>">
                             <i class="nav-icon fas fa-user"></i>
                             <p>

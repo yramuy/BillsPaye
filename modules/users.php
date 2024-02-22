@@ -1,8 +1,4 @@
-<?php require_once('../modules/header.php'); ?>
-
-<?php
-
-require_once('../modules/database.php');
+<?php require_once('../modules/header.php');
 
 $sql = "SELECT u.*,c.name as category,sc.sub_category_name,s.name as state,ci.city FROM tbl_user u 
 LEFT JOIN tbl_categories c ON u.category = c.id
@@ -62,7 +58,7 @@ $result = mysqli_query($conn, $sql);
                                 <th>Mobile Number</th>
                                 <th>State</th>
                                 <th>City</th>
-                                <th>Address</th>                                
+                                <th>Address</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +77,7 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $row['state']; ?></td>
                                         <td><?php echo $row['city']; ?></td>
                                         <td><?php echo $row['address']; ?></td>
-                                        
+
                                     </tr>
                             <?php $sno++;
                                 }

@@ -1,6 +1,12 @@
-<?php require_once('../modules/header.php'); ?>
+<?php require_once('../modules/header.php'); 
 
-<?php require_once('../modules/database.php');
+// Edit Data
+if (isset($_GET['recordId'])) {
+    $menuId = $_GET['recordId'];
+    $menuQuery = "SELECT * FROM tbl_menus WHERE id = $menuId";
+    $menuSql = mysqli_query($conn, $menuQuery);
+    $row = mysqli_fetch_assoc($menuSql);
+}
 
 if (isset($_POST['btnMenu'])) {
 
@@ -36,11 +42,11 @@ if (isset($_POST['btnMenu'])) {
                 move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
             }
 
+            $_SESSION['message'] = 'Menu saved successfully!';
 
             // Redirect to another page
             echo '<script>
-            window.location.href = "menus.php";
-            alert("Menu saved successfully!");            
+            window.location.href = "menus.php";         
                        
             </script>';
             // header("Location: categoryList.php");

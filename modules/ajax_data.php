@@ -60,3 +60,18 @@ if ($_POST['act'] == 'state') {
 
     echo json_encode($stateArr);
 }
+
+if ($_POST['act'] == 'delete') {
+
+    $deleteItemId = $_POST['deleteItemId'];
+    $deleteTable = $_POST['deleteTable'];
+
+    $deleteSql ="DELETE FROM $deleteTable WHERE id = $deleteItemId";
+    if (mysqli_query($conn, $deleteSql)) {
+        $status = 1;
+    } else {
+        $status = 0;
+    }
+
+    echo json_encode($status);
+}

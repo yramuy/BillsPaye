@@ -1,3 +1,25 @@
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://billspayeadmin.in/">BillsPayeAdmin.in</a>.</strong>
     All rights reserved.
@@ -13,19 +35,6 @@
 <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
-<!-- <script>
-    // Add active class to the current button (highlight it)
-    var header = document.getElementById("myDIV");
-    var btns = document.getElementsByClassName("nav-item");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
-        });
-    }
-</script> -->
 
 <!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
@@ -80,7 +89,59 @@
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 </body>
 
+
+
 </html>
+
+<script>
+    // Automatically close the alert after 3 seconds
+    window.setTimeout(function() {
+        document.getElementById('autoCloseAlert').remove();
+    }, 3000);
+
+    var deleteItemId;
+    var deleteTable;
+    var currentScreen;
+    function deleteItem(id,table,screen) {
+        // alert('Id : '+id+' Table : '+table);
+        deleteItemId = id;
+        deleteTable = table;
+        currentScreen = screen;
+        $('#confirmDeleteModal').modal('show');
+    }
+
+    var ajaxUrl1 = '<?php echo '../modules/ajax_data.php'; ?>';
+
+    // $('#autoCloseAlert1').hide();
+
+    $('#confirmDeleteBtn').click(function() {
+        console.log('deleteItemId :', deleteItemId);
+        // Here you can send an AJAX request to delete the item with the ID deleteItemId
+        $.ajax({
+                url: ajaxUrl1,
+                type: 'POST',
+                data: { act: 'delete',deleteItemId: deleteItemId,deleteTable: deleteTable },
+                dataType: 'json',
+                success:function(response) {
+
+                    window.location.href = currentScreen;
+                    $('#confirmDeleteModal').modal('hide');
+                    
+                    if (response == 1) {
+
+                        // $('#msg').html("Deleted Successfully");
+                        alert("Deleted Successfully");
+                    }else {
+                        // $('#msg').html("Deleted failed");
+                        alert("Delete failed");
+                    }                   
+
+                }
+            });
+        
+    });
+   
+</script>
 
 <script>
     $(function() {
@@ -146,9 +207,9 @@
                 item_name: {
                     required: true
                 },
-                file: {
-                    required: true
-                },
+                // file: {
+                //     required: true
+                // },
             },
             messages: {
                 category: {
@@ -157,9 +218,9 @@
                 item_name: {
                     required: "Please enter a item name"
                 },
-                file: {
-                    required: "Please choose file"
-                },
+                // file: {
+                //     required: "Please choose file"
+                // },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -325,7 +386,21 @@
 
         var ajaxUrl = '<?php echo '../modules/ajax_data.php'; ?>';
         var subCatUrl = '<?php echo '../modules/sub_categotry_ajax.php'; ?>';
+        var catId = '<?php echo isset($_GET['subCatId']) ? $edit_row['category_id'] : ''; ?>';
+        var stateId = '<?php echo isset($_GET['subCatId']) ? $edit_row['state_id'] : ''; ?>';
+        var cityId = '<?php echo isset($_GET['subCatId']) ? $edit_row['city_id'] : ''; ?>';
+        var rowCatId = '<?php echo isset($_GET['recordId']) ? $row['cat_id'] : ''; ?>';
+        var rowSubCatId = '<?php echo isset($_GET['recordId']) ? $row['sub_cat_id'] : ''; ?>';
+        var subId = '<?php echo isset($_GET['subCatId']) ? $edit_row['id'] : ''; ?>';
 
+        // $('#btnItem').click(function(){
+        //     if (subId != '') {
+        //         $('#file').attr('class','');
+        //         $('#file').attr('aria-invalid', 'false');
+        //     }
+        // });
+
+        // alert(rowCatId);
 
         // Categories
         getCategories();
@@ -345,6 +420,15 @@
                         optionHtml += '<option value=' + catRes[index2]['id'] + '>' + catRes[index2]['name'] + '</option>';
                     }
                     $('#category').html(optionHtml);
+
+                    if (catId != '') {
+                        $('#category').val(catId);
+                    }
+
+                    if (rowCatId != '') {
+                        $('#category').val(rowCatId);
+                        updateSubcategories(rowCatId)
+                    }
                 }
             });
         }
@@ -366,6 +450,11 @@
                         optionHtml2 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['name'] + '</option>';
                     }
                     $('#state').html(optionHtml2);
+
+                    if (stateId != '') {
+                        $('#state').val(stateId);
+                        updateCities(stateId);
+                    }
                 }
             });
         }
@@ -373,6 +462,10 @@
         // City Ajax Data
         $('#state').change(function() {
             var state = $(this).val();
+            updateCities(state);            
+        });
+
+        function updateCities(state){
             $.ajax({
                 url: ajaxUrl,
                 type: 'POST',
@@ -388,13 +481,21 @@
                     }
                     $('#city').html(optionHtml1);
 
+                    if (cityId != '') {
+                        $('#city').val(cityId);
+                    }
+
                 }
             });
-        });
+        }
 
         // Subcategory Ajax Data
         $('#category').change(function() {
             var category = $(this).val();
+            updateSubcategories(category);            
+        });
+
+        function updateSubcategories(category) {
             $.ajax({
                 url: ajaxUrl,
                 type: 'POST',
@@ -410,8 +511,13 @@
                     }
                     $('#subcategory').html(optionHtml2);
 
+                    if (rowSubCatId != '') {
+                        $('#subcategory').val(rowSubCatId);
+                    }
+
                 }
             });
-        });
+        }
     });
+
 </script>

@@ -91,6 +91,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['mobile_number'] = $mobile_number;
             $_SESSION['user_id'] = $user_id;
             $_SESSION['is_login'] = true;
+            $_SESSION['message'] = '';
             // Redirect to another page
             header("Location: index.php");
             exit;

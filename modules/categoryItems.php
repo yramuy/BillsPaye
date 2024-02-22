@@ -1,10 +1,9 @@
-<?php require_once('../modules/header.php'); ?>
+<?php require_once('../modules/header.php');
 
-<?php
+$table_name = 'tbl_sub_categories';
+$screen = 'categoryItems.php';
 
-require_once('../modules/database.php');
-
-$sql = "SELECT ci.*,c.name as category FROM tbl_sub_categories ci LEFT JOIN tbl_categories c ON ci.category_id = c.id ORDER BY ci.id DESC";
+$sql = "SELECT ci.*,c.name as category FROM $table_name ci LEFT JOIN tbl_categories c ON ci.category_id = c.id ORDER BY ci.id DESC";
 $result = mysqli_query($conn, $sql);
 
 
@@ -45,11 +44,12 @@ $result = mysqli_query($conn, $sql);
                             <tr>
                                 <th>SNo</th>
                                 <th>Category</th>
-                                <th>Subcategory</th>                                
+                                <th>Subcategory</th>
                                 <th>Address</th>
                                 <th>Distance</th>
                                 <th>Rating</th>
                                 <th>Image</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,9 +58,9 @@ $result = mysqli_query($conn, $sql);
                                 $sno = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     // Path to the image file
-                                    $imagePath = "../uploads/".$row['file_name']; // Update this with the actual path to your image file
-                            
-                                    ?>
+                                    $imagePath = "../uploads/" . $row['file_name']; // Update this with the actual path to your image file
+
+                            ?>
                                     <tr>
                                         <td>
                                             <?php echo $sno; ?>
@@ -74,18 +74,22 @@ $result = mysqli_query($conn, $sql);
                                         <td>
                                             <?php echo $row['sub_cat_address']; ?>
                                         </td>
-                                        
+
                                         <td>
                                             <?php echo $row['distance']; ?>
                                         </td>
                                         <td>
                                             <?php echo $row['rating']; ?>
                                         </td>
-                                        
+
                                         <td><img src="<?php echo $imagePath; ?>" alt="" style="width: 100px; height: 50px"></td>
+                                        <td>
+                                            <a href="addCategoryItem.php?subCatId=<?php echo $row['id']; ?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-danger" onClick="deleteItem('<?php echo $row['id']; ?>','<?php echo $table_name; ?>','<?php echo $screen;?>')"><i class="fas fa-trash"></i></a>
+                                        </td>
 
                                     </tr>
-                                    <?php $sno++;
+                            <?php $sno++;
                                 }
                             }
                             ?>

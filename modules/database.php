@@ -1,6 +1,6 @@
 <?php
 
-// $host = "195.35.5.194";
+// $host = "localhost";
 // $dbuser = "u378733873_Billspaye";
 // $dbpassword = "Billspaye@2024";
 // $database = "u378733873_billspaye";

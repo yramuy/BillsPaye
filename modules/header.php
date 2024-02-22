@@ -33,10 +33,13 @@
 // Start the session
 session_start();
 $username = $_SESSION['user_name'];
+$msg = $_SESSION['message'];
 if ($username == '') {
     header('Location: ../login.php');
     exit;
 }
+
+require_once('../modules/database.php');
 ?>
 
 <style>
@@ -57,7 +60,12 @@ if ($username == '') {
     #offer_title-error,
     #offer-error,
     #image-error,
-    #menu_title-error,#password-error, #email-error, #pincode-error, #client_address-error, #pan-error {
+    #menu_title-error,
+    #password-error,
+    #email-error,
+    #pincode-error,
+    #client_address-error,
+    #pan-error {
         display: inline;
         margin-left: 13.4em !important;
     }
@@ -75,7 +83,11 @@ if ($username == '') {
         margin-top: -1.5em;
     }
 
-    #subcategory-error, #phone_number-error, #city-error, #gst_number-error, #upi_id-error {
+    #subcategory-error,
+    #phone_number-error,
+    #city-error,
+    #gst_number-error,
+    #upi_id-error {
         display: inline;
         margin-left: 50.4em !important;
         margin-top: -1.5em;
@@ -107,6 +119,13 @@ if ($username == '') {
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+                <!-- Example alert with auto close -->
+                <?php if ($msg) { ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="autoCloseAlert">
+                        <?php echo $msg; ?>
+                    </div>
+                <?php }
+                $_SESSION['message'] = ''; ?>
             </ul>
 
             <!-- Right navbar links -->

@@ -1,12 +1,11 @@
-<?php require_once('../modules/header.php'); ?>
+<?php require_once('../modules/header.php'); 
 
-<?php
+$table_name = 'tbl_user';
+$screen = 'clients.php';
 
-require_once('../modules/database.php');
-
-$sql = "SELECT u.*,c.name as category,sc.sub_category_name,s.name as state,ci.city FROM tbl_user u 
-LEFT JOIN tbl_categories c ON u.category = c.id
-LEFT JOIN tbl_sub_categories sc ON u.subcategory = sc.id
+$sql = "SELECT u.*,c.name as category,sc.sub_category_name,s.name as state,ci.city FROM $table_name u 
+LEFT JOIN tbl_categories c ON u.cat_id = c.id
+LEFT JOIN tbl_sub_categories sc ON u.sub_cat_id = sc.id
 LEFT JOIN states s ON u.state_id = s.id
 LEFT JOIN cities ci ON u.city_id = ci.id WHERE u.user_role_id = 3 ORDER BY u.id DESC";
 $result = mysqli_query($conn, $sql);
@@ -58,12 +57,13 @@ $result = mysqli_query($conn, $sql);
                             <tr>
                                 <th>SNo</th>
                                 <th>Client Name</th>
-                                <th>Email</th>
-                                <th>Mobile Number</th>
-                                <th>City</th>
+                                <!-- <th>Email</th> -->
+                                <!-- <th>Mobile Number</th> -->
+                                <!-- <th>City</th> -->
                                 <th>Address</th>
                                 <th>Business Category</th>
                                 <th>Business Name</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,12 +77,16 @@ $result = mysqli_query($conn, $sql);
                                     <tr>
                                         <td><?php echo $sno; ?></td>
                                         <td><?php echo $row['user_name']; ?></td>
-                                        <td><?php echo $row['email']; ?></td>
-                                        <td><?php echo $row['mobile_number']; ?></td>
-                                        <td><?php echo $row['city']; ?></td>
+                                        <!-- <td><?php //echo $row['email']; ?></td> -->
+                                        <!-- <td><?php //echo $row['mobile_number']; ?></td> -->
+                                        <!-- <td><?php //echo $row['city']; ?></td> -->
                                         <td><?php echo $row['address']; ?></td>
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['sub_category_name']; ?></td>
+                                        <td>
+                                            <a href="addClient.php?id=<?php echo $row['id']; ?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-danger" onClick="deleteItem('<?php echo $row['id']; ?>','<?php echo $table_name; ?>','<?php echo $screen;?>')"><i class="fas fa-trash"></i></a>
+                                        </td>
                                         
                                     </tr>
                             <?php $sno++;
