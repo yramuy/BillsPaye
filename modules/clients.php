@@ -84,7 +84,7 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['sub_category_name']; ?></td>
                                         <td>
-                                            <a href="addClient.php?id=<?php echo $row['id']; ?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            <a href="addClient.php?userId=<?php echo $row['id']; ?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                             <a href="javascript:void(0)" class="btn btn-danger" onClick="deleteItem('<?php echo $row['id']; ?>','<?php echo $table_name; ?>','<?php echo $screen;?>')"><i class="fas fa-trash"></i></a>
                                         </td>
                                         

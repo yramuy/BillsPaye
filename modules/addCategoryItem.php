@@ -31,7 +31,7 @@ if (isset($_POST['btnItem'])) {
         $timeString = date("Y-m-d H:i:s");
         $timestamp = strtotime($timeString);
         $image_name = $timestamp . "_" . $fileName1; // Appending timestamp to filename
-    }else {
+    } else {
         $image_name = $edit_row['file_name'];
         $image_type = $edit_row['file_type'];
     }
@@ -45,7 +45,7 @@ if (isset($_POST['btnItem'])) {
     // Update Category
     if (isset($_GET['subCatId'])) {
         $subCatId = $_GET['subCatId'];
-        $updatesql ="UPDATE tbl_sub_categories SET category_id='$category',sub_category_name='$sub_category_name',state_id='$state',city_id='$city',sub_cat_description='$description',sub_cat_address='$address',rating='$rating',distance='$distance',file_name='$image_name',file_type='$image_type' WHERE id = $subCatId";
+        $updatesql = "UPDATE tbl_sub_categories SET category_id='$category',sub_category_name='$sub_category_name',state_id='$state',city_id='$city',sub_cat_description='$description',sub_cat_address='$address',rating='$rating',distance='$distance',file_name='$image_name',file_type='$image_type' WHERE id = $subCatId";
         if (mysqli_query($conn, $updatesql)) {
             $_SESSION['message'] = 'Subcategory Updated successfully!';
             echo '<script>
@@ -55,11 +55,10 @@ if (isset($_POST['btnItem'])) {
         } else {
             $_SESSION['message'] = 'update failed!';
             echo '<script>
-            window.location.href = "addCategoryItem.php?subCatId='.$subCatId.'";  
+            window.location.href = "addCategoryItem.php?subCatId=' . $subCatId . '";  
                        
             </script>';
         }
-
     } else {
         $sql1 = "INSERT INTO tbl_sub_categories (category_id, sub_category_name,state_id,city_id,sub_cat_description,sub_cat_address,rating,distance,file_name,file_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
@@ -67,27 +66,20 @@ if (isset($_POST['btnItem'])) {
             mysqli_stmt_bind_param($stmt1, "isiissssss", $category, $sub_category_name, $state, $city, $description, $address, $rating, $distance, $image_name, $image_type);
 
             if (mysqli_stmt_execute($stmt1)) {
-
-                
                 $_SESSION['message'] = 'Subcategory saved successfully!';
                 // Redirect to another page
                 echo '<script>
                 window.location.href = "categoryItems.php";                       
                 </script>';
-                // header("Location: categoryList.php");
-                // exit;
             } else {
                 $_SESSION['message'] = 'Save failed!';
-                    echo '<script>
+                echo '<script>
                     window.location.href = "addCategoryItem.php";  
                         
                 </script>';
-
             }
         }
     }
-
-    
 }
 
 ?>
@@ -186,6 +178,8 @@ if (isset($_POST['btnItem'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Image<em class="star">*</em></label>
                             <div class="col-sm-10">
                                 <input type="file" name="file" id="file" accept="image/*" <?php echo isset($_GET['subCatId']) ? "" : 'required'; ?>>
+                                <br />
+                                <?php echo isset($_GET['subCatId']) ? $edit_row['file_name'] : ""; ?>
                             </div>
                         </div>
                     </div>

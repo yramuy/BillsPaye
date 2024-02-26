@@ -260,20 +260,20 @@
                 },
                 menu_title: {
                     required: true
-                },
+                }
 
-                image: {
-                    required: true
-                },
+                // image: {
+                //     required: true
+                // },
             },
             messages: {
                 offer_title: {
                     required: "Please enter a offer title"
-                },
+                }
 
-                image: {
-                    required: "Please choose file"
-                },
+                // image: {
+                //     required: "Please choose file"
+                // },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -393,14 +393,10 @@
         var rowSubCatId = '<?php echo isset($_GET['recordId']) ? $row['sub_cat_id'] : ''; ?>';
         var subId = '<?php echo isset($_GET['subCatId']) ? $edit_row['id'] : ''; ?>';
 
-        // $('#btnItem').click(function(){
-        //     if (subId != '') {
-        //         $('#file').attr('class','');
-        //         $('#file').attr('aria-invalid', 'false');
-        //     }
-        // });
-
-        // alert(rowCatId);
+        var ustateId = '<?php echo isset($_GET['userId']) ? $clientRow['state_id'] : ''; ?>';
+        var ucityId = '<?php echo isset($_GET['userId']) ? $clientRow['city_id'] : ''; ?>';
+        var urowCatId = '<?php echo isset($_GET['userId']) ? $clientRow['cat_id'] : ''; ?>';
+        var urowSubCatId = '<?php echo isset($_GET['userId']) ? $clientRow['sub_cat_id'] : ''; ?>';
 
         // Categories
         getCategories();
@@ -429,6 +425,10 @@
                         $('#category').val(rowCatId);
                         updateSubcategories(rowCatId)
                     }
+                    if (urowCatId != '') {
+                        $('#category').val(urowCatId);
+                        updateSubcategories(urowCatId)
+                    }
                 }
             });
         }
@@ -454,6 +454,10 @@
                     if (stateId != '') {
                         $('#state').val(stateId);
                         updateCities(stateId);
+                    }
+                    if (ustateId != '') {
+                        $('#state').val(ustateId);
+                        updateCities(ustateId);
                     }
                 }
             });
@@ -484,6 +488,9 @@
                     if (cityId != '') {
                         $('#city').val(cityId);
                     }
+                    if (ucityId != '') {
+                        $('#city').val(ucityId);
+                    }
 
                 }
             });
@@ -513,6 +520,9 @@
 
                     if (rowSubCatId != '') {
                         $('#subcategory').val(rowSubCatId);
+                    }
+                    if (urowSubCatId != '') {
+                        $('#subcategory').val(urowSubCatId);
                     }
 
                 }

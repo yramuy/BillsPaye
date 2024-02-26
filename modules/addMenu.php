@@ -1,4 +1,4 @@
-<?php require_once('../modules/header.php'); 
+<?php require_once('../modules/header.php');
 
 // Edit Data
 if (isset($_GET['recordId'])) {
@@ -7,6 +7,8 @@ if (isset($_GET['recordId'])) {
     $menuSql = mysqli_query($conn, $menuQuery);
     $row = mysqli_fetch_assoc($menuSql);
 }
+
+
 
 if (isset($_POST['btnMenu'])) {
 
@@ -21,36 +23,62 @@ if (isset($_POST['btnMenu'])) {
     $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
     // Remove spaces
     $fileName1 = str_replace(' ', '', $fileName);
-
     $timeString = date("Y-m-d H:i:s");
     $timestamp = strtotime($timeString);
-
     $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
 
-    // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
+    if ((isset($_GET['recordId']) && $_FILES['image']['name'] != '') || (!isset($_GET['recordId']) && $_FILES['image']['name'] != '')) {
+        // Remove brackets and their contents
+        $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
+        // Remove spaces
+        $fileName1 = str_replace(' ', '', $fileName);
+        $timeString = date("Y-m-d H:i:s");
+        $timestamp = strtotime($timeString);
+        $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+    } else {
+        $newFilename = $row['image_name'];
+    }
 
-    $sql1 = "INSERT INTO tbl_menus (cat_id, sub_cat_id, menu_name, menu_description, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?)";
+    if ((isset($_GET['recordId']) && $_FILES['image']['name'] != '') || (!isset($_GET['recordId']) && $_FILES['image']['name'] != '')) {
+        $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
+        $targetFile = $targetDir . basename($newFilename);
+        move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+    }
 
-    if ($stmt1 = mysqli_prepare($conn, $sql1)) {
-        mysqli_stmt_bind_param($stmt1, "iisssis", $category, $subcategory, $menu_name, $description, $newFilename, $created_by, $created_on);
-
-        if (mysqli_stmt_execute($stmt1)) {
-
-            if ($newFilename) {
-                $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
-                $targetFile = $targetDir . basename($newFilename);
-                move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
-            }
-
-            $_SESSION['message'] = 'Menu saved successfully!';
-
-            // Redirect to another page
+    if (isset($_GET['recordId'])) {
+        $recordId = $_GET['recordId'];
+        $updatesql = "UPDATE tbl_menus SET cat_id='$category',sub_cat_id='$subcategory',menu_name='$menu_name',menu_description='$description',image_name='$newFilename' WHERE id = $recordId";
+        if (mysqli_query($conn, $updatesql)) {
+            $_SESSION['message'] = 'Menu Updated successfully!';
             echo '<script>
-            window.location.href = "menus.php";         
+            window.location.href = "menus.php";  
+                   
+        </script>';
+        } else {
+            $_SESSION['message'] = 'Menu update failed!';
+            echo '<script>
+            window.location.href = "addMenu.php?recordId=' . $recordId . '";  
                        
             </script>';
-            // header("Location: categoryList.php");
-            // exit;
+        }
+    } else {
+        $sql1 = "INSERT INTO tbl_menus (cat_id, sub_cat_id, menu_name, menu_description, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?)";
+        if ($stmt1 = mysqli_prepare($conn, $sql1)) {
+            mysqli_stmt_bind_param($stmt1, "iisssis", $category, $subcategory, $menu_name, $description, $newFilename, $created_by, $created_on);
+
+            if (mysqli_stmt_execute($stmt1)) {
+                $_SESSION['message'] = 'Menu saved successfully!';
+                // Redirect to another page
+                echo '<script>
+            window.location.href = "menus.php";        
+            </script>';
+            } else {
+                $_SESSION['message'] = 'Menu save failed!';
+                // Redirect to another page
+                echo '<script>
+            window.location.href = "addMenu.php";        
+            </script>';
+            }
         }
     }
 }
@@ -114,20 +142,26 @@ if (isset($_POST['btnMenu'])) {
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Menu Title <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="menu_title" name="menu_title" placeholder="Menu Title">
+                                <input type="text" class="form-control" id="menu_title" name="menu_title" placeholder="Menu Title" value="<?php echo isset($_GET['recordId']) ? $row['menu_name'] : ""; ?>">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description </label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Description <em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="description" name="description" row="4"></textarea>
+                                <textarea class="form-control" id="description" name="description" row="4"><?php echo isset($_GET['recordId']) ? $row['menu_description'] : ""; ?></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Menu Image<em class="star">*</em></label>
                             <div class="col-sm-10">
-                                <input type="file" name="image" id="image" accept="image/*" multiple>
+                                <input type="file" name="image" id="image" accept="image/*" multiple <?php echo isset($_GET['recordId']) ? "" : 'required'; ?>>
+                                <?php if (isset($_GET['recordId'])) {
+                                    $targetDir = "../uploads/" . $row['image_name'];
+                                ?>
+                                    <p class="mb-2"></p>
+                                    <img src="<?php echo $targetDir; ?>" alt="Image" width="200px" height="150px">
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

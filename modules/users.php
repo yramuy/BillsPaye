@@ -1,8 +1,8 @@
 <?php require_once('../modules/header.php');
 
 $sql = "SELECT u.*,c.name as category,sc.sub_category_name,s.name as state,ci.city FROM tbl_user u 
-LEFT JOIN tbl_categories c ON u.category = c.id
-LEFT JOIN tbl_sub_categories sc ON u.subcategory = sc.id
+LEFT JOIN tbl_categories c ON u.cat_id = c.id
+LEFT JOIN tbl_sub_categories sc ON u.sub_cat_id = sc.id
 LEFT JOIN states s ON u.state_id = s.id
 LEFT JOIN cities ci ON u.city_id = ci.id WHERE u.user_role_id = 2 ORDER BY u.id DESC";
 $result = mysqli_query($conn, $sql);

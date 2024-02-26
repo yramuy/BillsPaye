@@ -1,4 +1,18 @@
-<?php require_once('../modules/header.php'); 
+<?php require_once('../modules/header.php');
+
+// Edit Data
+if (isset($_GET['userId'])) {
+    $userId = $_GET['userId'];
+    $offerQuery = "SELECT * FROM tbl_user WHERE id = $userId";
+    $offerSql = mysqli_query($conn, $offerQuery);
+    $clientRow = mysqli_fetch_assoc($offerSql);
+
+    $name = explode(" ", $clientRow['user_name']);
+    $fname = $name['0'];
+    $lname = $name['1'];
+
+    $psw = $clientRow['user_password'];
+}
 
 if (isset($_POST['btnClient'])) {
 
@@ -18,13 +32,6 @@ if (isset($_POST['btnClient'])) {
     $created_on = date("Y-m-d H:i:s");
     $roleId = 3;
     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-    // Remove brackets and their contents
-    $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
-    // Remove spaces
-    $fileName1 = str_replace(' ', '', $fileName);
-    $timeString = date("Y-m-d H:i:s");
-    $timestamp = strtotime($timeString);
-    $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
     $contact_person = $_POST['contact_person'];
     $category = $_POST['category'];
     $subcategory = $_POST['subcategory'];
@@ -35,53 +42,95 @@ if (isset($_POST['btnClient'])) {
     $ifsc_code = $_POST['ifsc_code'];
     $upi_id = $_POST['upi_id'];
 
-    // Remove spaces
-    $fileName1 = str_replace(' ', '', $fileName);
-    $timeString = date("Y-m-d H:i:s");
-    $timestamp = strtotime($timeString);
-    $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+    // if (isset($_GET['userId'])) {
+    //     if (password_verify($user_password, $psw)) {
+    //         echo "Password is correct";
+    //     } else {
+    //         echo "Password is incorrect";
+    //     }
+    // }
 
-    // Remove spaces
-    $aadhar_imagefileName = str_replace(' ', '', $aadhar_image);
-    $aadhar_imagetimeString = date("Y-m-d H:i:s");
-    $aadhar_imagetimestamp = strtotime($aadhar_imagetimeString);
-    $aadhar_imagenewFilename = $aadhar_imagetimestamp . "_" . $aadhar_imagefileName; // Appending timestamp to filename
+    $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
 
-    // Remove spaces
-    $certificatefileName1 = str_replace(' ', '', $certificate);
-    $certificatetimeString = date("Y-m-d H:i:s");
-    $certificatetimestamp = strtotime($certificatetimeString);
-    $certificatenewFilename = $certificatetimestamp . "_" . $certificatefileName1; // Appending timestamp to filename
-    
+    if ((isset($_GET['userId']) && $_FILES['image']['name'] != '') || (!isset($_GET['userId']) && $_FILES['image']['name'] != '')) {
+        // Remove spaces
+        $fileName1 = str_replace(' ', '', $image_name);
+        $timeString = date("Y-m-d H:i:s");
+        $timestamp = strtotime($timeString);
+        $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+    } else {
+        $newFilename = $clientRow['image_name'];
+    }
 
-    // echo $newFilename;die; // Output: "2024-02-14-12-30-45_example.txt"
+    if ((isset($_GET['userId']) && $_FILES['image']['name'] != '') || (!isset($_GET['userId']) && $_FILES['image']['name'] != '')) {
+        $targetFile = $targetDir . basename($newFilename);
+        move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+    }
 
-    $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, contact_person, cat_id, sub_cat_id, pan, account_number, account_name, ifsc_code, upi_id, aadhar_image, certificate, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    if ((isset($_GET['userId']) && $_FILES['image']['name'] != '') || (!isset($_GET['userId']) && $_FILES['image']['name'] != '')) {
+        // Remove spaces
+        $aadhar_imagefileName = str_replace(' ', '', $aadhar_image);
+        $aadhar_imagetimeString = date("Y-m-d H:i:s");
+        $aadhar_imagetimestamp = strtotime($aadhar_imagetimeString);
+        $aadhar_imagenewFilename = $aadhar_imagetimestamp . "_" . $aadhar_imagefileName; // Appending timestamp to filename
+    } else {
+        $aadhar_imagenewFilename = $clientRow['aadhar_image'];
+    }
 
-    if ($stmt1 = mysqli_prepare($conn, $sql1)) {
-        mysqli_stmt_bind_param($stmt1, "issisiiisssiisissssssis", $roleId, $user_name, $email, $phone_number, $hashPassword, $state, $city, $pincode, $client_address, $gst_number, $contact_person, $category, $subcategory, $pan, $account_number, $account_name, $ifsc_code, $upi_id, $aadhar_imagenewFilename, $certificatenewFilename, $newFilename, $created_by, $created_on);
+    if ((isset($_GET['userId']) && $_FILES['aadhar_image']['name'] != '') || (!isset($_GET['userId']) && $_FILES['aadhar_image']['name'] != '')) {
+        $targetFile1 = $targetDir . basename($aadhar_imagenewFilename);
+        move_uploaded_file($_FILES["aadhar_image"]["tmp_name"], $targetFile1);
+    }
 
-        if (mysqli_stmt_execute($stmt1)) {
+    if ((isset($_GET['userId']) && $_FILES['certificate']['name'] != '') || (!isset($_GET['userId']) && $_FILES['certificate']['name'] != '')) {
+        // Remove spaces
+        $certificatefileName1 = str_replace(' ', '', $certificate);
+        $certificatetimeString = date("Y-m-d H:i:s");
+        $certificatetimestamp = strtotime($certificatetimeString);
+        $certificatenewFilename = $certificatetimestamp . "_" . $certificatefileName1; // Appending timestamp to filename
+    } else {
+        $certificatenewFilename = $clientRow['certificate'];
+    }
 
-            if ($newFilename) {
-                $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
-                $targetFile = $targetDir . basename($newFilename);
-                move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+    if ((isset($_GET['userId']) && $_FILES['certificate']['name'] != '') || (!isset($_GET['userId']) && $_FILES['certificate']['name'] != '')) {
+        $targetFile2 = $targetDir . basename($certificatenewFilename);
+        move_uploaded_file($_FILES["certificate"]["tmp_name"], $targetFile2);
+    }
 
-                $targetFile1 = $targetDir . basename($aadhar_imagenewFilename);
-                move_uploaded_file($_FILES["aadhar_image"]["tmp_name"], $targetFile1);
-
-                $targetFile2 = $targetDir . basename($certificatenewFilename);
-                move_uploaded_file($_FILES["certificate"]["tmp_name"], $targetFile2);
-            }
-
-            $_SESSION['message'] = 'Client saved successfully!';
-            // Redirect to another page
+    if (isset($_GET['userId'])) {
+        $userId = $_GET['userId'];
+        $updatesql = "UPDATE tbl_user SET user_role_id='$roleId',user_name='$user_name',email='$email',mobile_number='$phone_number',state_id='$state',city_id='$city',pincode='$pincode',address='$client_address',gst_number='$gst_number',contact_person='$contact_person',cat_id='$category',sub_cat_id='$subcategory',pan='$pan',account_number='$account_number',account_name='$account_name',ifsc_code='$ifsc_code',upi_id='$upi_id',aadhar_image='$aadhar_imagenewFilename',certificate='$certificatenewFilename',image_name='$newFilename' WHERE id = $userId";
+        if (mysqli_query($conn, $updatesql)) {
+            $_SESSION['message'] = 'Client Updated successfully!';
             echo '<script>
+            window.location.href = "clients.php";  
+                   
+        </script>';
+        } else {
+            $_SESSION['message'] = 'Client update failed!';
+            echo '<script>
+            window.location.href = "addClient.php?userId=' . $userId . '";  
+                       
+            </script>';
+        }
+    } else {
+        $sql1 = "INSERT INTO tbl_user (user_role_id, user_name, email, mobile_number, user_password, state_id, city_id, pincode, address, gst_number, contact_person, cat_id, sub_cat_id, pan, account_number, account_name, ifsc_code, upi_id, aadhar_image, certificate, image_name, created_by, created_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        if ($stmt1 = mysqli_prepare($conn, $sql1)) {
+            mysqli_stmt_bind_param($stmt1, "issisiiisssiisissssssis", $roleId, $user_name, $email, $phone_number, $hashPassword, $state, $city, $pincode, $client_address, $gst_number, $contact_person, $category, $subcategory, $pan, $account_number, $account_name, $ifsc_code, $upi_id, $aadhar_imagenewFilename, $certificatenewFilename, $newFilename, $created_by, $created_on);
+
+            if (mysqli_stmt_execute($stmt1)) {
+                $_SESSION['message'] = 'Client saved successfully!';
+                // Redirect to another page
+                echo '<script>
             window.location.href = "clients.php";                       
             </script>';
-            // header("Location: categoryList.php");
-            // exit;
+            } else {
+                $_SESSION['message'] = 'Client save failed!';
+                // Redirect to another page
+                echo '<script>
+            window.location.href = "addClient.php";                       
+            </script>';
+            }
         }
     }
 }
@@ -126,17 +175,17 @@ if (isset($_POST['btnClient'])) {
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Client Name<em class="star">*</em></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="<?php echo isset($_GET['userId']) ? $fname : ""; ?>">
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="<?php echo isset($_GET['userId']) ? $lname : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Contact Person <em class="star">*</em></label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Contact Person">
+                                <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Contact Person" value="<?php echo isset($_GET['userId']) ? $clientRow['contact_person'] : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -157,12 +206,12 @@ if (isset($_POST['btnClient'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email <em class="star">*</em></label>
 
                             <div class="col-sm-4">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo isset($_GET['userId']) ? $clientRow['email'] : ""; ?>">
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Phone Number <em class="star">*</em></label>
 
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number">
+                                <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" value="<?php echo isset($_GET['userId']) ? $clientRow['mobile_number'] : ""; ?>">
                             </div>
                         </div>
 
@@ -170,7 +219,7 @@ if (isset($_POST['btnClient'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Password <em class="star">*</em></label>
 
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?php echo isset($_GET['userId']) ? $clientRow['password'] : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -193,13 +242,13 @@ if (isset($_POST['btnClient'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Pincode <em class="star">*</em></label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Pincode">
+                                <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Pincode" value="<?php echo isset($_GET['userId']) ? $clientRow['pincode'] : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Address </label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="client_address" name="client_address" row="4"></textarea>
+                                <textarea class="form-control" id="client_address" name="client_address" row="4"><?php echo isset($_GET['userId']) ? $clientRow['address'] : ""; ?></textarea>
                             </div>
                         </div>
 
@@ -207,35 +256,35 @@ if (isset($_POST['btnClient'])) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Pan <em class="star">*</em></label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="pan" name="pan" placeholder="Pan Number">
+                                <input type="text" class="form-control" id="pan" name="pan" placeholder="Pan Number" value="<?php echo isset($_GET['userId']) ? $clientRow['pan'] : ""; ?>">
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">GST Number <em class="star">*</em></label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="gst_number" name="gst_number" placeholder="GST Number">
+                                <input type="text" class="form-control" id="gst_number" name="gst_number" placeholder="GST Number" value="<?php echo isset($_GET['userId']) ? $clientRow['gst_number'] : ""; ?>">
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Account Number </label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Account Number">
+                                <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Account Number" value="<?php echo isset($_GET['userId']) ? $clientRow['account_number'] : ""; ?>">
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Account Name </label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Account Name">
+                                <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Account Name" value="<?php echo isset($_GET['userId']) ? $clientRow['account_name'] : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">IFSC Code </label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" placeholder="IFSC Code">
+                                <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" placeholder="IFSC Code" value="<?php echo isset($_GET['userId']) ? $clientRow['ifsc_code'] : ""; ?>">
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">UPI ID <em class="star">*</em></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="UPI ID">
+                                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="UPI ID" value="<?php echo isset($_GET['userId']) ? $clientRow['upi_id'] : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
