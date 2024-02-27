@@ -135,19 +135,40 @@ $user_role = $_SESSION['user_role'];
                     
                 <?php } ?>
 
-                <!-- <li class="nav-item">
-                    <a href="wishlist.php" class="nav-link <?php //if ($url[5]) {
-                                                            //echo $url[5] == "wishlist.php" ? "active" : "";
-                                                            //} 
+                <li class="nav-item">
+                    <a href="photos.php" class="nav-link <?php if ($url[5]) {
+                                                            echo $url[5] == "photos.php" ? "active" : "";
+                                                            } 
+                                                            ?>">
+                        <i class="nav-icon fas fa-images"></i>
+                        <p>
+                        Photos
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="wishlist.php" class="nav-link <?php if ($url[5]) {
+                                                            echo $url[5] == "wishlist.php" ? "active" : "";
+                                                            } 
                                                             ?>">
                         <i class="nav-icon fas fa-heart"></i>
                         <p>
                             Wishlist
                         </p>
                     </a>
-                </li> -->
+                </li>
 
-
+                <li class="nav-item">
+                    <a href="reviews.php" class="nav-link <?php if ($url[5]) {
+                                                                        echo $url[5] == "reviews.php" ? "active" : "";
+                                                                    }
+                                                                    ?>">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Reviews
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

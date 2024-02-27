@@ -1,9 +1,9 @@
 <?php require_once('../modules/header.php');
 
-$sql = "SELECT w.*,c.name as category,sc.sub_category_name,u.user_name FROM tbl_wishlist w 
-LEFT JOIN tbl_categories c ON w.cat_id = c.id
-LEFT JOIN tbl_sub_categories sc ON w.sub_cat_id = sc.id
-LEFT JOIN tbl_user u ON u.id = w.user_id ORDER BY w.id DESC";
+$sql = "SELECT r.*,c.name as category,sc.sub_category_name,u.user_name FROM tbl_reviews r 
+LEFT JOIN tbl_categories c ON r.cat_id = c.id
+LEFT JOIN tbl_sub_categories sc ON r.sub_cat_id = sc.id
+LEFT JOIN tbl_user u ON u.id = r.user_id ORDER BY r.id DESC";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -14,12 +14,12 @@ $result = mysqli_query($conn, $sql);
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Wishlist</h1>
+                    <h1 class="m-0">Reviews</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Wishlist</li>
+                        <li class="breadcrumb-item active">Reviews</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -33,7 +33,7 @@ $result = mysqli_query($conn, $sql);
 
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Wishlist</h3>
+                    <h3 class="card-title">Reviews</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -44,7 +44,7 @@ $result = mysqli_query($conn, $sql);
                                 <th>Category</th>
                                 <th>Subcategory</th>
                                 <th>User</th>
-                                <th>Wishlist Status</th>
+                                <th>Rating</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -58,8 +58,8 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['sub_category_name']; ?></td>
                                         <td><?php echo $row['user_name']; ?></td>
-                                        <td><?php echo $row['status']; ?></td>
-                                        <td><?php echo $row['wishlist_on']; ?></td>
+                                        <td><?php echo $row['rating']; ?></td>
+                                        <td><?php echo $row['created_on']; ?></td>
 
                                     </tr>
                             <?php $sno++;
