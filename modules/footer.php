@@ -1,36 +1,36 @@
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this item?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-            </div>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 
 <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://billspayeadmin.in/">BillsPayeAdmin.in</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-        <!-- <b>Version</b> 3.2.0 -->
-    </div>
+  <strong>Copyright &copy; 2014-2021 <a href="https://billspayeadmin.in/">BillsPayeAdmin.in</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <!-- <b>Version</b> 3.2.0 -->
+  </div>
 </footer>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
+  <!-- Control sidebar content goes here -->
 </aside>
 <!-- /.control-sidebar -->
 </div>
@@ -42,7 +42,7 @@
 <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-    $.widget.bridge('uibutton', $.ui.button)
+  $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -94,440 +94,541 @@
 </html>
 
 <script>
-    // Automatically close the alert after 3 seconds
-    window.setTimeout(function() {
-        document.getElementById('autoCloseAlert').remove();
-    }, 3000);
+  // Automatically close the alert after 3 seconds
+  window.setTimeout(function() {
+    document.getElementById('autoCloseAlert').remove();
+  }, 3000);
 
-    var deleteItemId;
-    var deleteTable;
-    var currentScreen;
-    function deleteItem(id,table,screen) {
-        // alert('Id : '+id+' Table : '+table);
-        deleteItemId = id;
-        deleteTable = table;
-        currentScreen = screen;
-        $('#confirmDeleteModal').modal('show');
+  $('#foodTypeDiv').hide();
+
+  var deleteItemId;
+  var deleteTable;
+  var currentScreen;
+
+  function deleteItem(id, table, screen) {
+    // alert('Id : '+id+' Table : '+table);
+    deleteItemId = id;
+    deleteTable = table;
+    currentScreen = screen;
+    $('#confirmDeleteModal').modal('show');
+  }
+
+  var ajaxUrl1 = '<?php echo '../modules/ajax_data.php'; ?>';
+
+  // $('#autoCloseAlert1').hide();
+
+  $('#confirmDeleteBtn').click(function() {
+    console.log('deleteItemId :', deleteItemId);
+    // Here you can send an AJAX request to delete the item with the ID deleteItemId
+    $.ajax({
+      url: ajaxUrl1,
+      type: 'POST',
+      data: {
+        act: 'delete',
+        deleteItemId: deleteItemId,
+        deleteTable: deleteTable
+      },
+      dataType: 'json',
+      success: function(response) {
+
+        window.location.href = currentScreen;
+        $('#confirmDeleteModal').modal('hide');
+
+        if (response == 1) {
+
+          // $('#msg').html("Deleted Successfully");
+          alert("Deleted Successfully");
+        } else {
+          // $('#msg').html("Deleted failed");
+          alert("Delete failed");
+        }
+
+      }
+    });
+
+  });
+</script>
+
+<script>
+  $(function() {
+    // $.validator.setDefaults({
+    //     submitHandler: function () {
+    //         alert("Category successful saved!");
+    //     }
+    // });
+    $('#category_form').validate({
+      rules: {
+        category: {
+          required: true
+        },
+      },
+      messages: {
+        category: {
+          required: "Please enter a category"
+        },
+      },
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  });
+
+  $(function() {
+    // $.validator.setDefaults({
+    //     submitHandler: function () {
+    //         alert("Category successful saved!");
+    //     }
+    // });
+
+    $.validator.addMethod("foodTypeValidate", function(value, element) {
+      var temp = true;
+      if ($('input[type="checkbox"]:checked').length === 0) {
+        temp = false;
+        event.preventDefault();
+      }
+
+      return temp;
+    });
+
+    $('#category_item').validate({
+      rules: {
+        category: {
+          required: true
+        },
+        sub_category_name: {
+          required: true
+        },
+        state: {
+          required: true
+        },
+        city: {
+          required: true
+        },
+        address: {
+          required: true
+        },
+        distance: {
+          required: true
+        },
+        description: {
+          required: true
+        },
+        item_name: {
+          required: true
+        },
+        // file: {
+        //     required: true
+        // },
+      },
+      messages: {
+        category: {
+          required: "Please select a category"
+        },
+        item_name: {
+          required: "Please enter a item name"
+        },
+        // file: {
+        //     required: "Please choose file"
+        // },
+      },
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  });
+  $(function() {
+    // $.validator.setDefaults({
+    //     submitHandler: function () {
+    //         alert("Category successful saved!");
+    //     }
+    // });
+    $('#exciting_offer').validate({
+      rules: {
+        offer_title: {
+          required: true
+        },
+        category: {
+          required: true
+        },
+        subcategory: {
+          required: true
+        },
+        offer: {
+          required: true
+        },
+        description: {
+          required: true
+        },
+        menu_title: {
+          required: true
+        },
+        post_title: {
+          required: true
+        }
+
+        // image: {
+        //     required: true
+        // },
+      },
+      messages: {
+        offer_title: {
+          required: "Please enter a offer title"
+        }
+
+        // image: {
+        //     required: "Please choose file"
+        // },
+      },
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  });
+
+  $(function() {
+    // $.validator.setDefaults({
+    //     submitHandler: function () {
+    //         alert("Category successful saved!");
+    //     }
+    // });
+    $('#client').validate({
+      rules: {
+        first_name: {
+          required: true
+        },
+        last_name: {
+          required: true
+        },
+        contact_person: {
+          required: true
+        },
+        category: {
+          required: true
+        },
+        subcategory: {
+          required: true
+        },
+        email: {
+          required: true,
+          email: true
+        },
+        phone_number: {
+          required: true,
+          number: true
+        },
+        password: {
+          required: true
+        },
+        state: {
+          required: true
+        },
+        city: {
+          required: true
+        },
+        pincode: {
+          required: true
+        },
+        client_address: {
+          required: true
+        },
+        pan: {
+          required: true
+        },
+        gst_number: {
+          required: true
+        },
+        upi_id: {
+          required: true
+        },
+
+      },
+
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  });
+</script>
+<script>
+  $(function() {
+
+    $("#example1").DataTable({
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
+      "buttons": ["excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+<script>
+  $(function() {
+
+    var ajaxUrl = '<?php echo '../modules/ajax_data.php'; ?>';
+    var subCatUrl = '<?php echo '../modules/sub_categotry_ajax.php'; ?>';
+    var catId = '<?php echo isset($_GET['subCatId']) ? $edit_row['category_id'] : ''; ?>';
+    var stateId = '<?php echo isset($_GET['subCatId']) ? $edit_row['state_id'] : ''; ?>';
+    var cityId = '<?php echo isset($_GET['subCatId']) ? $edit_row['city_id'] : ''; ?>';
+    var rowCatId = '<?php echo isset($_GET['recordId']) ? $row['cat_id'] : ''; ?>';
+    var rowSubCatId = '<?php echo isset($_GET['recordId']) ? $row['sub_cat_id'] : ''; ?>';
+    var subId = '<?php echo isset($_GET['subCatId']) ? $edit_row['id'] : ''; ?>';
+
+    var ustateId = '<?php echo isset($_GET['userId']) ? $clientRow['state_id'] : ''; ?>';
+    var ucityId = '<?php echo isset($_GET['userId']) ? $clientRow['city_id'] : ''; ?>';
+    var urowCatId = '<?php echo isset($_GET['userId']) ? $clientRow['cat_id'] : ''; ?>';
+    var urowSubCatId = '<?php echo isset($_GET['userId']) ? $clientRow['sub_cat_id'] : ''; ?>';
+
+    // Categories
+    getCategories();
+
+    function getCategories() {
+
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          act: 'category'
+        },
+        dataType: 'json',
+        success: function(catRes) {
+          var optionHtml = '<option value="">--Select--</option>';
+          for (let index2 = 0; index2 < catRes.length; index2++) {
+            optionHtml += '<option value=' + catRes[index2]['id'] + '>' + catRes[index2]['name'] + '</option>';
+          }
+          $('#category').html(optionHtml);
+
+          if (catId != '') {
+            $('#category').val(catId);
+          }
+
+          if (rowCatId != '') {
+            $('#category').val(rowCatId);
+            updateSubcategories(rowCatId)
+          }
+
+          if (urowCatId != '') {
+            $('#category').val(urowCatId);
+            updateSubcategories(urowCatId)
+          }
+
+          if (catId == 1) {
+            $('#foodTypeDiv').show();
+          } else {
+            $('#foodTypeDiv').hide();
+          }
+        }
+      });
     }
 
-    var ajaxUrl1 = '<?php echo '../modules/ajax_data.php'; ?>';
+    //States dropdown
+    GetStates();
 
-    // $('#autoCloseAlert1').hide();
+    function GetStates() {
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          act: 'state'
+        },
+        dataType: 'json',
+        success: function(stateRes) {
+          var optionHtml2 = '<option value="">--Select--</option>';
+          for (let index = 0; index < stateRes.length; index++) {
+            optionHtml2 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['name'] + '</option>';
+          }
+          $('#state').html(optionHtml2);
 
-    $('#confirmDeleteBtn').click(function() {
-        console.log('deleteItemId :', deleteItemId);
-        // Here you can send an AJAX request to delete the item with the ID deleteItemId
+          if (stateId != '') {
+            $('#state').val(stateId);
+            updateCities(stateId);
+          }
+          if (ustateId != '') {
+            $('#state').val(ustateId);
+            updateCities(ustateId);
+          }
+        }
+      });
+    }
+
+    // City Ajax Data
+    $('#state').change(function() {
+      var state = $(this).val();
+      updateCities(state);
+    });
+
+    function updateCities(state) {
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          state_id: state,
+          act: 'city'
+        },
+        dataType: 'json',
+        success: function(cityRes) {
+          var optionHtml1 = '<option value="">--Select--</option>';
+          for (let index = 0; index < cityRes.length; index++) {
+            optionHtml1 += '<option value=' + cityRes[index]['id'] + '>' + cityRes[index]['city'] + '</option>';
+          }
+          $('#city').html(optionHtml1);
+
+          if (cityId != '') {
+            $('#city').val(cityId);
+          }
+          if (ucityId != '') {
+            $('#city').val(ucityId);
+          }
+
+        }
+      });
+    }
+
+    // Subcategory Ajax Data
+    $('#category').change(function() {
+      var category = $(this).val();
+      updateSubcategories(category);
+
+      if (category == 1) {
+        $('#foodTypeDiv').show();
+      } else {
+        $('#foodTypeDiv').hide();
+      }
+    });
+
+    function updateSubcategories(category) {
+
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          category: category,
+          act: 'subcategory'
+        },
+        dataType: 'json',
+        success: function(subcatRes) {
+          var optionHtml2 = '<option value="">--Select--</option>';
+          for (let index2 = 0; index2 < subcatRes.length; index2++) {
+            optionHtml2 += '<option value=' + subcatRes[index2]['id'] + '>' + subcatRes[index2]['sub_category_name'] + '</option>';
+          }
+          $('#subcategory').html(optionHtml2);
+
+          if (rowSubCatId != '') {
+            $('#subcategory').val(rowSubCatId);
+          }
+          if (urowSubCatId != '') {
+            $('#subcategory').val(urowSubCatId);
+          }
+
+        }
+      });
+    }
+
+    $('#subcategory').change(function() {
+      updatePayments();
+    });
+    $('#from_date').change(function() {
+      updatePayments();
+    });
+    $('#to_date').change(function() {
+      updatePayments();
+    });
+
+    function updatePayments() {
+      var subCatVal = $('#subcategory').val();
+      var from_date = $('#from_date').val();
+      var to_date = $('#to_date').val();
+      $('#service_fees').val('');
+      $('#sub_total').val('');
+
+      if (subCatVal != "" && (from_date != "" && to_date != "")) {
         $.ajax({
-                url: ajaxUrl1,
-                type: 'POST',
-                data: { act: 'delete',deleteItemId: deleteItemId,deleteTable: deleteTable },
-                dataType: 'json',
-                success:function(response) {
-
-                    window.location.href = currentScreen;
-                    $('#confirmDeleteModal').modal('hide');
-                    
-                    if (response == 1) {
-
-                        // $('#msg').html("Deleted Successfully");
-                        alert("Deleted Successfully");
-                    }else {
-                        // $('#msg').html("Deleted failed");
-                        alert("Delete failed");
-                    }                   
-
-                }
-            });
-        
-    });
-   
-</script>
-
-<script>
-    $(function() {
-        // $.validator.setDefaults({
-        //     submitHandler: function () {
-        //         alert("Category successful saved!");
-        //     }
-        // });
-        $('#category_form').validate({
-            rules: {
-                category: {
-                    required: true
-                },
-            },
-            messages: {
-                category: {
-                    required: "Please enter a category"
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
+          url: ajaxUrl,
+          type: "POST",
+          data: {
+            client: subCatVal,
+            fromDate: from_date,
+            toDate: to_date,
+            act: 'Payout'
+          },
+          dataType: 'json',
+          success: function(response) {
+            $('#total_cus_payable').val(formatRupees(response[0]['amount']) + '.00');
+            $('#payments').text(response[0]['paymentsCnt']);
+            if (response[0]['status'] == 1) {
+              $('#payout_status').text('Pending');
             }
+
+          }
         });
+      }
+    }
+
+    $('#service_fees').change(function() {
+      var total_cus_payable = $('#total_cus_payable').val();
+      var service_fees = $('#service_fees').val();
+
+
+      let num1 = parseFloat(total_cus_payable.replace(/,/g, ''));
+      let num2 = parseFloat(service_fees.replace(/,/g, ''));
+
+      if (num2 > num1) {
+        alert("Total service fees should not exceed Total customer payable");
+        $('#service_fees').val('');
+        $('#sub_total').val('');
+        return false;
+      }
+      let result = num1 - num2;
+      $('#sub_total').val(formatRupees(result) + '.00');
+
     });
 
-    $(function() {
-        // $.validator.setDefaults({
-        //     submitHandler: function () {
-        //         alert("Category successful saved!");
-        //     }
-        // });
-        $('#category_item').validate({
-            rules: {
-                category: {
-                    required: true
-                },
-                sub_category_name: {
-                    required: true
-                },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                address: {
-                    required: true
-                },
-                distance: {
-                    required: true
-                },
-                description: {
-                    required: true
-                },
-                item_name: {
-                    required: true
-                },
-                // file: {
-                //     required: true
-                // },
-            },
-            messages: {
-                category: {
-                    required: "Please select a category"
-                },
-                item_name: {
-                    required: "Please enter a item name"
-                },
-                // file: {
-                //     required: "Please choose file"
-                // },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-    $(function() {
-        // $.validator.setDefaults({
-        //     submitHandler: function () {
-        //         alert("Category successful saved!");
-        //     }
-        // });
-        $('#exciting_offer').validate({
-            rules: {
-                offer_title: {
-                    required: true
-                },
-                category: {
-                    required: true
-                },
-                subcategory: {
-                    required: true
-                },
-                offer: {
-                    required: true
-                },
-                description: {
-                    required: true
-                },
-                menu_title: {
-                    required: true
-                }
-
-                // image: {
-                //     required: true
-                // },
-            },
-            messages: {
-                offer_title: {
-                    required: "Please enter a offer title"
-                }
-
-                // image: {
-                //     required: "Please choose file"
-                // },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-
-    $(function() {
-        // $.validator.setDefaults({
-        //     submitHandler: function () {
-        //         alert("Category successful saved!");
-        //     }
-        // });
-        $('#client').validate({
-            rules: {
-                first_name: {
-                    required: true
-                },
-                last_name: {
-                    required: true
-                },
-                contact_person: {
-                    required: true
-                },
-                category: {
-                    required: true
-                },
-                subcategory: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email:true
-                },
-                phone_number: {
-                    required: true,
-                    number:true
-                },
-                password: {
-                    required: true
-                },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                pincode: {
-                    required: true
-                },
-                client_address: {
-                    required: true
-                },
-                pan: {
-                    required: true
-                },
-                gst_number: {
-                    required: true
-                },
-                upi_id: {
-                    required: true
-                },
-                
-            },
-            
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-</script>
-<script>
-    $(function() {
-
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["excel", "pdf"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>
-<script>
-    $(function() {
-
-        var ajaxUrl = '<?php echo '../modules/ajax_data.php'; ?>';
-        var subCatUrl = '<?php echo '../modules/sub_categotry_ajax.php'; ?>';
-        var catId = '<?php echo isset($_GET['subCatId']) ? $edit_row['category_id'] : ''; ?>';
-        var stateId = '<?php echo isset($_GET['subCatId']) ? $edit_row['state_id'] : ''; ?>';
-        var cityId = '<?php echo isset($_GET['subCatId']) ? $edit_row['city_id'] : ''; ?>';
-        var rowCatId = '<?php echo isset($_GET['recordId']) ? $row['cat_id'] : ''; ?>';
-        var rowSubCatId = '<?php echo isset($_GET['recordId']) ? $row['sub_cat_id'] : ''; ?>';
-        var subId = '<?php echo isset($_GET['subCatId']) ? $edit_row['id'] : ''; ?>';
-
-        var ustateId = '<?php echo isset($_GET['userId']) ? $clientRow['state_id'] : ''; ?>';
-        var ucityId = '<?php echo isset($_GET['userId']) ? $clientRow['city_id'] : ''; ?>';
-        var urowCatId = '<?php echo isset($_GET['userId']) ? $clientRow['cat_id'] : ''; ?>';
-        var urowSubCatId = '<?php echo isset($_GET['userId']) ? $clientRow['sub_cat_id'] : ''; ?>';
-
-        // Categories
-        getCategories();
-
-        function getCategories() {
-
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    act: 'category'
-                },
-                dataType: 'json',
-                success: function(catRes) {
-                    var optionHtml = '<option value="">--Select--</option>';
-                    for (let index2 = 0; index2 < catRes.length; index2++) {
-                        optionHtml += '<option value=' + catRes[index2]['id'] + '>' + catRes[index2]['name'] + '</option>';
-                    }
-                    $('#category').html(optionHtml);
-
-                    if (catId != '') {
-                        $('#category').val(catId);
-                    }
-
-                    if (rowCatId != '') {
-                        $('#category').val(rowCatId);
-                        updateSubcategories(rowCatId)
-                    }
-                    if (urowCatId != '') {
-                        $('#category').val(urowCatId);
-                        updateSubcategories(urowCatId)
-                    }
-                }
-            });
-        }
-
-        //States dropdown
-        GetStates();
-
-        function GetStates() {
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    act: 'state'
-                },
-                dataType: 'json',
-                success: function(stateRes) {
-                    var optionHtml2 = '<option value="">--Select--</option>';
-                    for (let index = 0; index < stateRes.length; index++) {
-                        optionHtml2 += '<option value=' + stateRes[index]['id'] + '>' + stateRes[index]['name'] + '</option>';
-                    }
-                    $('#state').html(optionHtml2);
-
-                    if (stateId != '') {
-                        $('#state').val(stateId);
-                        updateCities(stateId);
-                    }
-                    if (ustateId != '') {
-                        $('#state').val(ustateId);
-                        updateCities(ustateId);
-                    }
-                }
-            });
-        }
-
-        // City Ajax Data
-        $('#state').change(function() {
-            var state = $(this).val();
-            updateCities(state);            
-        });
-
-        function updateCities(state){
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    state_id: state,
-                    act: 'city'
-                },
-                dataType: 'json',
-                success: function(cityRes) {
-                    var optionHtml1 = '<option value="">--Select--</option>';
-                    for (let index = 0; index < cityRes.length; index++) {
-                        optionHtml1 += '<option value=' + cityRes[index]['id'] + '>' + cityRes[index]['city'] + '</option>';
-                    }
-                    $('#city').html(optionHtml1);
-
-                    if (cityId != '') {
-                        $('#city').val(cityId);
-                    }
-                    if (ucityId != '') {
-                        $('#city').val(ucityId);
-                    }
-
-                }
-            });
-        }
-
-        // Subcategory Ajax Data
-        $('#category').change(function() {
-            var category = $(this).val();
-            updateSubcategories(category);            
-        });
-
-        function updateSubcategories(category) {
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    category: category,
-                    act: 'subcategory'
-                },
-                dataType: 'json',
-                success: function(subcatRes) {
-                    var optionHtml2 = '<option value="">--Select--</option>';
-                    for (let index2 = 0; index2 < subcatRes.length; index2++) {
-                        optionHtml2 += '<option value=' + subcatRes[index2]['id'] + '>' + subcatRes[index2]['sub_category_name'] + '</option>';
-                    }
-                    $('#subcategory').html(optionHtml2);
-
-                    if (rowSubCatId != '') {
-                        $('#subcategory').val(rowSubCatId);
-                    }
-                    if (urowSubCatId != '') {
-                        $('#subcategory').val(urowSubCatId);
-                    }
-
-                }
-            });
-        }
-    });
-
+    function formatRupees(amount) {
+      // Convert number to string and split into array of whole and decimal parts
+      let parts = amount.toString().split(".");
+      // Add commas to whole part
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // Combine whole and decimal parts with rupee symbol
+      return parts.join(".");
+    }
+  });
 </script>

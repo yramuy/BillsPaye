@@ -70,10 +70,12 @@ if (isset($_POST['btn_login'])) {
         $email = $row['email'];
         $mobile_number = $row['mobile_number'];
         $user_id = $row['id'];
+        $sub_cat_id = $row['sub_cat_id'];
+        $cat_id = $row['cat_id'];
 
         if ($user_role_id == 1) {
             $role_name = 'Admin';
-        } else if ($user_role_id == 2) {
+        } elseif ($user_role_id == 2) {
             $role_name = 'User';
         } else {
             $role_name = 'Client';
@@ -90,6 +92,8 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['email'] = $email;
             $_SESSION['mobile_number'] = $mobile_number;
             $_SESSION['user_id'] = $user_id;
+            $_SESSION['cat_id'] = $cat_id;
+            $_SESSION['sub_cat_id'] = $sub_cat_id;
             $_SESSION['is_login'] = true;
             $_SESSION['message'] = '';
             // Redirect to another page

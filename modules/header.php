@@ -61,6 +61,7 @@ require_once('../modules/database.php');
     #offer-error,
     #image-error,
     #menu_title-error,
+    #post_title-error,
     #password-error,
     #email-error,
     #pincode-error,

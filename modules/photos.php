@@ -64,10 +64,7 @@ $result = mysqli_query($conn, $sql);
                                         <td><?php echo $row['created_on']; ?></td>
 
                                     </tr>
-                            <?php $sno++;
-                                }
-                            }
-                            ?>
+                            <?php $sno++; } } ?>
                         </tbody>
                     </table>
                 </div>
