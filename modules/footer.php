@@ -592,11 +592,21 @@
           },
           dataType: 'json',
           success: function(response) {
-            $('#total_cus_payable').val(formatRupees(response[0]['amount']) + '.00');
-            $('#payments').text(response[0]['paymentsCnt']);
-            if (response[0]['status'] == 1) {
-              $('#payout_status').text('Pending');
+            console.log(response)
+            if (response[0]['amount'] != null) {
+              $('#total_cus_payable').val(formatRupees(response[0]['amount']) + '.00');
+              $('#payments').text(response[0]['paymentsCnt']);
+              $('#payment_cnt').val(response[0]['paymentsCnt']);
+              if (response[0]['status'] == 1) {
+                $('#payout_status').text('Pending');
+              }
+            } else {
+              $('#total_cus_payable').val('00' + '.00');
+              $('#payments').text('0');
+              $('#payment_cnt').val(0);
+              $('#payout_status').text('No Payments');
             }
+
 
           }
         });
