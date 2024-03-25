@@ -92,3 +92,31 @@ if ($_POST['act'] == 'Payout') {
 
   echo json_encode($payment);
 }
+
+if ($_POST['act'] == 'Payout_History') {
+  $client = $_POST['client'];
+  $fromDate = $_POST['fromDate'];
+  $toDate = $_POST['toDate'];
+
+  $query = "SELECT p.*,sc.sub_category_name as client FROM tbl_payouts p LEFT JOIN tbl_sub_categories sc ON p.sub_cat_id = sc.id ";
+
+  if(!empty($client)) {
+    $query .= "WHERE p.sub_cat_id = '$client' ";
+  }
+
+  if(!empty($fromDate) && !empty($toDate)) {
+    $query .= "AND (p.from_date >= '$fromDate' AND p.to_date <= '$toDate') ";
+  }
+
+  if(!empty($client)) {
+    $query .= "AND p.status = 2";
+  }
+  $result = mysqli_query($conn, $query);
+  $payouts = array();
+  if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    array_push($payouts, $row);
+  }
+
+  echo json_encode($payouts);
+}

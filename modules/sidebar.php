@@ -204,6 +204,7 @@ $user_role = $_SESSION['user_role'];
                 <p>Transaction History</p>
               </a>
             </li>
+            <?php if ($user_role_id == 1) { ?>
             <li class="nav-item">
               <a href="payout.php" class="nav-link <?php if ($url[5]) {
                                                       echo $url[5] == "payout.php" ? "active" : "";
@@ -213,6 +214,7 @@ $user_role = $_SESSION['user_role'];
                 <p>Payout</p>
               </a>
             </li>
+            <?php }?>
             <li class="nav-item">
               <a href="payout_history.php" class="nav-link <?php if ($url[5]) {
                                                               echo $url[5] == "payout_history.php" ? "active" : "";

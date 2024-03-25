@@ -198,27 +198,29 @@ $user_role = $_SESSION['user_role'];
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="modules/transaction_history.php" class="nav-link <?php if ($url[5]) {
-                                                                  echo $url[5] == "transaction_history.php" ? "active" : "";
-                                                                }
-                                                                ?>">
+                                                                          echo $url[5] == "transaction_history.php" ? "active" : "";
+                                                                        }
+                                                                        ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Transaction History</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="modules/payout.php" class="nav-link <?php if ($url[5]) {
-                                                      echo $url[5] == "payout.php" ? "active" : "";
-                                                    }
-                                                    ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Payout</p>
-              </a>
-            </li>
+            <?php if ($user_role_id == 1) { ?>
+              <li class="nav-item">
+                <a href="modules/payout.php" class="nav-link <?php if ($url[5]) {
+                                                                echo $url[5] == "payout.php" ? "active" : "";
+                                                              }
+                                                              ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payout</p>
+                </a>
+              </li>
+            <?php } ?>
             <li class="nav-item">
               <a href="modules/payout_history.php" class="nav-link <?php if ($url[5]) {
-                                                              echo $url[5] == "payout_history.php" ? "active" : "";
-                                                            }
-                                                            ?>">
+                                                                      echo $url[5] == "payout_history.php" ? "active" : "";
+                                                                    }
+                                                                    ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Payout History</p>
               </a>

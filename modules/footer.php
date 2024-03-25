@@ -417,6 +417,9 @@
     var ucityId = '<?php echo isset($_GET['userId']) ? $clientRow['city_id'] : ''; ?>';
     var urowCatId = '<?php echo isset($_GET['userId']) ? $clientRow['cat_id'] : ''; ?>';
     var urowSubCatId = '<?php echo isset($_GET['userId']) ? $clientRow['sub_cat_id'] : ''; ?>';
+    var user_role_id = '<?php echo $_SESSION['user_role_id']; ?>';
+    var sub_cat_id = '<?php echo $_SESSION['sub_cat_id']; ?>';
+    var cat_id = '<?php echo $_SESSION['cat_id']; ?>';
 
     // Categories
     getCategories();
@@ -449,6 +452,11 @@
           if (urowCatId != '') {
             $('#category').val(urowCatId);
             updateSubcategories(urowCatId)
+          }
+
+          if (user_role_id == 3 && cat_id != '') {
+            $('#category').val(cat_id);
+            updateSubcategories(cat_id)
           }
 
           if (catId == 1) {
@@ -558,6 +566,9 @@
           if (urowSubCatId != '') {
             $('#subcategory').val(urowSubCatId);
           }
+          if (user_role_id == 3 && sub_cat_id != '') {
+            $('#subcategory').val(sub_cat_id);
+          }
 
         }
       });
@@ -565,12 +576,15 @@
 
     $('#subcategory').change(function() {
       updatePayments();
+      GetPayoutHistory();
     });
     $('#from_date').change(function() {
       updatePayments();
+      GetPayoutHistory();
     });
     $('#to_date').change(function() {
       updatePayments();
+      GetPayoutHistory();
     });
 
     function updatePayments() {
@@ -639,6 +653,50 @@
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       // Combine whole and decimal parts with rupee symbol
       return parts.join(".");
+    }
+
+    if (user_role_id == 3) {
+      GetPayoutHistory();
+    }
+
+    function GetPayoutHistory() {
+      if (user_role_id == 3) {
+        var subCatVal = sub_cat_id;
+        $('#category').attr('disabled','disabled');
+        $('#subcategory').attr('disabled','disabled');
+      } else {
+        var subCatVal = $('#subcategory').val();
+        $('#category').removeAttr('disabled');
+        $('#subcategory').removeAttr('disabled');
+      }
+
+      var from_date = $('#from_date').val();
+      var to_date = $('#to_date').val();
+
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          client: subCatVal,
+          fromDate: from_date,
+          toDate: to_date,
+          act: 'Payout_History'
+        },
+        dataType: 'json',
+        success: function(response) {
+          $('#payout_body').html('');
+          var sno = 1;
+          var status = "";
+          for (let i = 0; i < response.length; i++) {
+            if (response[i]['status'] == 2) {
+              status = 'Paid';
+            }
+            $('#payout_body').append('<tr><td>' + sno + '</td><td>' + response[i]['client'] + '</td><td>' + response[i]['from_date'] + '</td><td>' + response[i]['to_date'] + '</td><td>' + response[i]['total_customer_payable'] + '</td><td>' + response[i]['total_service_fees'] + '</td><td>' + response[i]['sub_total'] + '</td><td>' + response[i]['created_on'] + '</td><td style="color:#0eff0e; font-weight: bold;">' + status + '</td></tr>');
+            sno++;
+          }
+        }
+
+      });
     }
   });
 </script>

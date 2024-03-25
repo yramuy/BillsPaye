@@ -1,9 +1,15 @@
 <?php require_once('../modules/header.php');
 
+$user_role_id = $_SESSION['user_role_id'];
+$sub_cat_id = $_SESSION['sub_cat_id'];
+
 $query = "SELECT t.*,u.user_name,sc.sub_category_name,date(t.transaction_date) as tDate FROM tbl_transactions t
         LEFT JOIN tbl_user u ON t.transaction_by = u.id
-        LEFT JOIN tbl_sub_categories sc ON t.transaction_to = sc.id
-        ORDER BY t.id DESC";
+        LEFT JOIN tbl_sub_categories sc ON t.transaction_to = sc.id ";
+if ($user_role_id == 3) {
+  $query .= "WHERE t.transaction_to = '$sub_cat_id' ";
+}
+$query .= "ORDER BY t.id DESC";
 $result = mysqli_query($conn, $query);
 
 ?>
@@ -54,9 +60,11 @@ $result = mysqli_query($conn, $query);
                 $sno = 1;
                 while ($row = mysqli_fetch_assoc($result)) {
                   if ($row['status'] == 1) {
-                    $status = 'Not Settelment';
-                  } else if($row['status'] == 2) {
-                    $status = 'Settelment';
+                    $status = 'Settelment Pending';
+                    $color = 'color:darkgoldenrod; font-weight: bold;';
+                  } else if ($row['status'] == 2) {
+                    $status = 'Settelment Completed';
+                    $color = 'color:#0eff0e; font-weight: bold;';
                   } else {
                     $status = '';
                   }
@@ -69,7 +77,7 @@ $result = mysqli_query($conn, $query);
                     <td><?php echo $row['sub_category_name']; ?></td>
                     <td><?php echo $row['transaction_amount']; ?></td>
                     <td><?php echo $row['tDate']; ?></td>
-                    <td><?php echo $status; ?></td>
+                    <td style="<?php echo $color; ?>"><?php echo $status; ?></td>
 
 
                   </tr>

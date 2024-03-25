@@ -20,20 +20,32 @@ if (isset($_POST['btnPayout'])) {
   $created_on = date('Y-m-d');
   $status = 2;
 
-  $output = array();
-  $query = "INSERT INTO tbl_payouts(sub_cat_id,from_date,to_date,total_customer_payable,total_service_fees,payment_cnt,sub_total,created_by,created_on,status) VALUES(?,?,?,?,?,?,?,?,?,?)";
-  if ($stmt = mysqli_prepare($conn, $query)) {
-    mysqli_stmt_bind_param($stmt, "issssisisi", $subcategory, $from_date, $to_date, $total_cus_payable, $service_fees, $payment_cnt, $sub_total, $created_by, $created_on, $status);
-    if (mysqli_stmt_execute($stmt)) {
-      $output['$status'] = 1;
-      $output['message'] = "Payment saved successfully";
+  $tranQuery = "SELECT * FROM tbl_transactions WHERE transaction_to = '$subcategory'
+  AND (date(transaction_date) >= '$from_date' AND date(transaction_date) <= '$to_date') AND status = 1";
+  $sql = mysqli_query($conn, $tranQuery);
+
+  if (mysqli_num_rows($sql) > 0) {
+    while ($row = mysqli_fetch_assoc($sql)) {
+      $id = $row['id'];
+      $updateQuery = "UPDATE tbl_transactions SET status = '2' WHERE id = '$id'";
+      $result = mysqli_query($conn, $updateQuery);
+    }
+
+    $output = array();
+    $query = "INSERT INTO tbl_payouts(sub_cat_id,from_date,to_date,total_customer_payable,total_service_fees,payment_cnt,sub_total,created_by,created_on,status) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    if ($stmt = mysqli_prepare($conn, $query)) {
+      mysqli_stmt_bind_param($stmt, "issssisisi", $subcategory, $from_date, $to_date, $total_cus_payable, $service_fees, $payment_cnt, $sub_total, $created_by, $created_on, $status);
+      if (mysqli_stmt_execute($stmt)) {
+        $output['$status'] = 1;
+        $output['message'] = "Payout saved successfully";
+      } else {
+        $output['$status'] = 0;
+        $output['message'] = "Payout save failed";
+      }
     } else {
       $output['$status'] = 0;
-      $output['message'] = "Payment save failed";
+      $output['message'] = "Failed to prepare payout query";
     }
-  } else {
-    $output['$status'] = 0;
-    $output['message'] = "Failed to prepare Transaction query";
   }
 }
 
