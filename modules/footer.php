@@ -662,8 +662,8 @@
     function GetPayoutHistory() {
       if (user_role_id == 3) {
         var subCatVal = sub_cat_id;
-        $('#category').attr('disabled','disabled');
-        $('#subcategory').attr('disabled','disabled');
+        $('#category').attr('disabled', 'disabled');
+        $('#subcategory').attr('disabled', 'disabled');
       } else {
         var subCatVal = $('#subcategory').val();
         $('#category').removeAttr('disabled');
