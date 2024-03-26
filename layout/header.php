@@ -38,6 +38,10 @@ if ($username == '') {
     header('Location: login.php');
     exit;
 }
+require_once('modules/database.php');
+
+$policy_sql = "SELECT * FROM tbl_terms_conditions";
+$policy_result = mysqli_query($conn, $policy_sql);
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -59,7 +63,20 @@ if ($username == '') {
                     <a href="index.php" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Policy Pages
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <?php while($policy_row = mysqli_fetch_assoc($policy_result)) {?>
+                        <a class="dropdown-item" href="modules/policy.php?id=<?php echo $policy_row['id'];?>"><?php echo $policy_row['policy_title']; ?></a>
+                        <?php }?>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
                 </li>
             </ul>
 
