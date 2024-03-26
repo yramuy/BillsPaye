@@ -224,8 +224,18 @@ $user_role = $_SESSION['user_role'];
                 <p>Payout History</p>
               </a>
             </li>
+
           </ul>
         </li>
+        <li class="nav-item">
+              <a href="policy_list.php" class="nav-link <?php if ($url[5]) {
+                                                              echo $url[5] == "policy_list.php" ? "active" : "";
+                                                            }
+                                                            ?>">
+                <i class="fas fa-shield-alt nav-icon"></i>
+                <p>Policy</p>
+              </a>
+            </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

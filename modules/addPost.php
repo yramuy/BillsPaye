@@ -29,12 +29,12 @@ if (isset($_POST['btnPost'])) {
   $created_by = $_SESSION['user_id'];
   $created_on = date("Y-m-d H:i:s");
   // Remove brackets and their contents
-  $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
-  // Remove spaces
-  $fileName1 = str_replace(' ', '', $fileName);
-  $timeString = date("Y-m-d H:i:s");
-  $timestamp = strtotime($timeString);
-  $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+  // $fileName = preg_replace('/\([^)]*\)/', '', $image_name);
+  // // Remove spaces
+  // $fileName1 = str_replace(' ', '', $fileName);
+  // $timeString = date("Y-m-d H:i:s");
+  // $timestamp = strtotime($timeString);
+  // $newFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
 
   if ((isset($_GET['recordId']) && $_FILES['image']['name'] != '') || (!isset($_GET['recordId']) && $_FILES['image']['name'] != '')) {
     // Remove brackets and their contents

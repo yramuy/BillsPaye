@@ -227,7 +227,15 @@ $user_role = $_SESSION['user_role'];
             </li>
           </ul>
         </li>
-
+        <li class="nav-item">
+              <a href="modules/policy_list.php" class="nav-link <?php if ($url[5]) {
+                                                              echo $url[5] == "policy_list.php" || $url[5] == "addPolicy.php" ? "active" : "";
+                                                            }
+                                                            ?>">
+                <i class="fas fa-shield-alt nav-icon"></i>
+                <p>Policy</p>
+              </a>
+            </li>
 
       </ul>
     </nav>

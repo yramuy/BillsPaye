@@ -66,6 +66,7 @@ require_once('../modules/database.php');
     #email-error,
     #pincode-error,
     #client_address-error,
+    #policy_title-error,
     #pan-error {
         display: inline;
         margin-left: 13.4em !important;

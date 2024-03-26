@@ -19,6 +19,8 @@ if (isset($_POST['btnPayout'])) {
   $created_by = $_SESSION['user_id'];
   $created_on = date('Y-m-d');
   $status = 2;
+  $tax_invoice_file_name = $_FILES['tax_invoice_file']['name'];
+  $annexure_file_name = $_FILES['annexure_file']['name'];
 
   $tranQuery = "SELECT * FROM tbl_transactions WHERE transaction_to = '$subcategory'
   AND (date(transaction_date) >= '$from_date' AND date(transaction_date) <= '$to_date') AND status = 1";
@@ -31,10 +33,44 @@ if (isset($_POST['btnPayout'])) {
       $result = mysqli_query($conn, $updateQuery);
     }
 
+    if (!empty($tax_invoice_file_name)) {
+      // Remove brackets and their contents
+      $fileName = preg_replace('/\([^)]*\)/', '', $tax_invoice_file_name);
+      // Remove spaces
+      $fileName1 = str_replace(' ', '', $fileName);
+      $timeString = date("Y-m-d H:i:s");
+      $timestamp = strtotime($timeString);
+      $invoiceNewFilename = $timestamp . "_" . $fileName1; // Appending timestamp to filename
+
+      $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
+      $targetFile = $targetDir . basename($invoiceNewFilename);
+      move_uploaded_file($_FILES["tax_invoice_file"]["tmp_name"], $targetFile);
+    } else {
+      $invoiceNewFilename = "";
+    }
+
+    if (!empty($annexure_file_name)) {
+      // Remove brackets and their contents
+      $fileName2 = preg_replace('/\([^)]*\)/', '', $annexure_file_name);
+      // Remove spaces
+      $fileName11 = str_replace(' ', '', $fileName2);
+      $timeString = date("Y-m-d H:i:s");
+      $timestamp = strtotime($timeString);
+      $annexureNewFilename = $timestamp . "_" . $fileName11; // Appending timestamp to filename
+
+      $targetDir = "../uploads/"; // Specify the target directory where you want to store the uploaded files
+      $targetFile = $targetDir . basename($annexureNewFilename);
+      move_uploaded_file($_FILES["annexure_file"]["tmp_name"], $targetFile);
+    } else {
+      $annexureNewFilename = "";
+    }
+
+
+
     $output = array();
-    $query = "INSERT INTO tbl_payouts(sub_cat_id,from_date,to_date,total_customer_payable,total_service_fees,payment_cnt,sub_total,created_by,created_on,status) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO tbl_payouts(sub_cat_id,from_date,to_date,total_customer_payable,total_service_fees,payment_cnt,sub_total,created_by,created_on,status,annexure,tax_invoice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
     if ($stmt = mysqli_prepare($conn, $query)) {
-      mysqli_stmt_bind_param($stmt, "issssisisi", $subcategory, $from_date, $to_date, $total_cus_payable, $service_fees, $payment_cnt, $sub_total, $created_by, $created_on, $status);
+      mysqli_stmt_bind_param($stmt, "issssisisiss", $subcategory, $from_date, $to_date, $total_cus_payable, $service_fees, $payment_cnt, $sub_total, $created_by, $created_on, $status,$annexureNewFilename,$invoiceNewFilename);
       if (mysqli_stmt_execute($stmt)) {
         $output['$status'] = 1;
         $output['message'] = "Payout saved successfully";
@@ -78,7 +114,7 @@ if (isset($_POST['btnPayout'])) {
           <h3 class="card-title">Payout</h3>
         </div>
         <!-- /.card-header -->
-        <form class="form-horizontal" method="post" id="payout">
+        <form class="form-horizontal" method="post" id="payout" enctype="multipart/form-data">
           <div class="card-body">
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Business Category</label>
@@ -143,16 +179,27 @@ if (isset($_POST['btnPayout'])) {
                       <input type="text" class="form-control" id="sub_total" name="sub_total" placeholder="Subtotal amount" value="" style="width: 13em;" readonly>
                     </div>
                   </td>
-          </div>
-          </tr>
+                </tr>
+                <tr>
+                  <td>Annexure<div class="input-group-prepend">
+                      <input type="file" class="form-control" id="annexure_file" name="annexure_file" value="" style="width: 15em;">
+                    </div>
+                  </td>
+                  <td>Tax Invoice<div class="input-group-prepend">
+                      <input type="file" class="form-control" id="tax_invoice_file" name="tax_invoice_file" value="" style="width: 15em;">
+                    </div>
+                  </td>
+                </tr>
 
-          <tr>
-            <td></td>
-            <td>
-              <button type="submit" class="btn btn-info" name="btnPayout">Save</button>
-              <button type="button" class="btn btn-default" href="menus.php">Cancel</button>
-            </td>
-          </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button type="submit" class="btn btn-info" name="btnPayout">Save</button>
+                    <button type="button" class="btn btn-default" href="menus.php">Cancel</button>
+                  </td>
+                </tr>
+          </div>
+
         </form>
         </tbody>
         </table>

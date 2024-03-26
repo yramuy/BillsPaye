@@ -76,6 +76,8 @@ $result = mysqli_query($conn, $query);
                 <th>Subtotal</th>
                 <th>Paid On</th>
                 <th>Status</th>
+                <th>Annexure</th>
+                <th>Tax Invoce</th>
               </tr>
             </thead>
             <tbody id="payout_body"></tbody>

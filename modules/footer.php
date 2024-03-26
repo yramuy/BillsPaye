@@ -87,6 +87,7 @@
 <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="../dist/js/ckeditor/ckeditor.js"></script>
 </body>
 
 
@@ -94,6 +95,8 @@
 </html>
 
 <script>
+
+
   // Automatically close the alert after 3 seconds
   window.setTimeout(function() {
     document.getElementById('autoCloseAlert').remove();
@@ -150,6 +153,7 @@
 </script>
 
 <script>
+    CKEDITOR.replace('policy_content');
   $(function() {
     // $.validator.setDefaults({
     //     submitHandler: function () {
@@ -691,7 +695,9 @@
             if (response[i]['status'] == 2) {
               status = 'Paid';
             }
-            $('#payout_body').append('<tr><td>' + sno + '</td><td>' + response[i]['client'] + '</td><td>' + response[i]['from_date'] + '</td><td>' + response[i]['to_date'] + '</td><td>' + response[i]['total_customer_payable'] + '</td><td>' + response[i]['total_service_fees'] + '</td><td>' + response[i]['sub_total'] + '</td><td>' + response[i]['created_on'] + '</td><td style="color:#0eff0e; font-weight: bold;">' + status + '</td></tr>');
+            var imagePath = "../uploads/"+response[i]['annexure'];
+            var taxInvoiceFilePath = "../uploads/"+response[i]['tax_invoice'];
+            $('#payout_body').append('<tr><td>' + sno + '</td><td>' + response[i]['client'] + '</td><td>' + response[i]['from_date'] + '</td><td>' + response[i]['to_date'] + '</td><td>' + response[i]['total_customer_payable'] + '</td><td>' + response[i]['total_service_fees'] + '</td><td>' + response[i]['sub_total'] + '</td><td>' + response[i]['created_on'] + '</td><td style="color:#0eff0e; font-weight: bold;">' + status + '</td><td><a href="'+imagePath+'" target="_blank"><i class="fas fa-file"></i></a></td><td><a href="'+taxInvoiceFilePath+'" target="_blank"><i class="fas fa-file"></i></a></td></tr>');
             sno++;
           }
         }
@@ -699,4 +705,6 @@
       });
     }
   });
+
+
 </script>
